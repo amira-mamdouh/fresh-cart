@@ -19,11 +19,7 @@ body {
 .cursor-pointer {
   cursor: pointer;
 }
-a,
-a:hover {
-  color: black;
-  text-decoration: none;
-}
+
 .product:hover {
   box-shadow: var(--shadow);
   border: solid 1px var(--main-color);

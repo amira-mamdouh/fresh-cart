@@ -5,7 +5,7 @@ import logo from "../../assets/images/freshcart-logo.svg";
 export default function Navbar() {
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary px-3">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             <img src={logo} alt="fresh cart logo" />
