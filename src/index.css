@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import url("https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@300&display=swap");
 :root {
-  --main-color: #0aad0a;
+  --main-color: rgb(10, 173, 10);
   --light-color: #f0f3f2;
   --shadow: rgba(145, 158, 171, 0.2) 0px 2px 4px -1px,
     rgba(145, 158, 171, 0.14) 0px 4px 5px 0px,
@@ -44,4 +44,9 @@ body {
 }
 .bg-main-light {
   background-color: var(--light-color) !important;
+}
+.form-control:focus {
+  background-color: var(--light-color);
+  border-color: var(--light-color);
+  box-shadow: 0 0 0 0.25rem rgba(10, 173, 10, 0.25);
 }
