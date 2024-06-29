@@ -1,8 +1,11 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import React from "react";
+import { useState } from "react";
+import { ColorRing } from "react-loader-spinner";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 
+// Validation schema using Yup
 const mySchema = yup.object({
   name: yup
     .string()
@@ -26,6 +29,13 @@ const mySchema = yup.object({
 });
 
 export default function Register() {
+  // State variables to handle loading, success, and error states
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isUnSuccess, setUnIsSuccess] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  // Initial form data
   const userData = {
     name: "",
     email: "",
@@ -34,26 +44,64 @@ export default function Register() {
     rePassword: "",
   };
 
+  // useFormik hook for form handling
   const myFormik = useFormik({
     initialValues: userData,
     validationSchema: mySchema,
     onSubmit: function (values) {
+      setIsLoading(true);
       axios
         .post(`https://ecommerce.routemisr.com/api/v1/auth/signup`, values)
-        .then(function (success) {
-          console.log(success);
+        .then(function () {
+          setIsSuccess(true);
+          setTimeout(() => {
+            setIsSuccess(false);
+            navigate("/login");
+          }, 3000);
+          setIsLoading(false);
         })
         .catch(function (errors) {
-          console.log(errors);
+          // Improved error handling
+          if (errors.response) {
+            setUnIsSuccess(errors.response.data.message);
+          } else if (errors.request) {
+            setUnIsSuccess("Network error, please try again later.");
+          } else {
+            setUnIsSuccess("An error occurred. Please try again.");
+          }
+          setTimeout(() => {
+            setUnIsSuccess(false);
+          }, 3000);
+          setIsLoading(false);
         });
     },
   });
 
+  // Function to handle Enter key press
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      myFormik.handleSubmit();
+    }
+  };
+
   return (
     <>
       <div className="container-sm w-md-75 m-md-auto p-5">
+        {isSuccess ? (
+          <div className="alert alert-success text-center">
+            Congratulation your account has been created.
+          </div>
+        ) : (
+          ""
+        )}
+        {isUnSuccess ? (
+          <div className="alert alert-danger text-center">{isUnSuccess}</div>
+        ) : (
+          ""
+        )}
         <h3 className="mb-3">Register Now:</h3>
-        <form onSubmit={myFormik.handleSubmit}>
+        <form onSubmit={myFormik.handleSubmit} onKeyPress={handleKeyPress}>
           <label htmlFor="name">Name:</label>
           <input
             value={myFormik.values.name}
@@ -140,7 +188,19 @@ export default function Register() {
           )}
           <div className="button text-end">
             <button className="btn bg-main text-white" type="submit">
-              Register
+              {isLoading ? (
+                <ColorRing
+                  visible={true}
+                  height="35"
+                  width="35"
+                  ariaLabel="color-ring-loading"
+                  wrapperStyle={{}}
+                  wrapperClass="color-ring-wrapper"
+                  colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
+                />
+              ) : (
+                "Register"
+              )}
             </button>
           </div>
         </form>
