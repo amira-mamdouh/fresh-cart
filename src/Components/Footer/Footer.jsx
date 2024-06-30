@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <>
       <footer className="bg-main-light py-5">
-        <div className="container">
+        <div className="container-fluid px-4">
           <h4>Get the Frech Cart App</h4>
           <p>
             We will send you a link, ioen it on your phone to download the app.
