@@ -8,7 +8,8 @@ import NotFound from "./Components/NotFound/NotFound";
 import Cart from "./Components/Cart/Cart";
 import Categories from "./Components/Categories/Categories";
 import ForgotPassword from "./Components/ForgotPassword/ForgotPassword";
-import ResetCode from "./Components/ResetCode/ResetCode";
+import VerifyResetCode from "./Components/VerifyResetCode/VerifyResetCode";
+import UpdateUserData from "./Components/UpdateUserData/UpdateUserData";
 
 export default function App() {
   const routing = createBrowserRouter([
@@ -21,7 +22,8 @@ export default function App() {
         { path: "/register", element: <Register /> },
         { path: "/login", element: <Login /> },
         { path: "/forgotPassword", element: <ForgotPassword /> },
-        { path: "/resetcode", element: <ResetCode /> },
+        { path: "/verifyResetCode", element: <VerifyResetCode /> },
+        { path: "/updateData", element: <UpdateUserData /> },
         { path: "/cart", element: <Cart /> },
         { path: "/categories", element: <Categories /> },
         { path: "/brands", element: <Categories /> },

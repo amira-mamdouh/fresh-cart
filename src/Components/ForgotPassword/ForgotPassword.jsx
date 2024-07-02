@@ -41,7 +41,7 @@ export default function ForgotPassword() {
         setMessage(response.data.message);
         setTimeout(() => {
           setIsSuccess(false);
-          navigate("/resetcode");
+          navigate("/verifyResetCode");
         }, 3000);
       } catch (error) {
         if (error.response) {
