@@ -7,6 +7,7 @@ import Products from "./Components/Products/Products";
 import NotFound from "./Components/NotFound/NotFound";
 import Cart from "./Components/Cart/Cart";
 import Categories from "./Components/Categories/Categories";
+import ForgotPassword from "./Components/ForgotPassword/ForgotPassword";
 
 export default function App() {
   const routing = createBrowserRouter([
@@ -18,6 +19,7 @@ export default function App() {
         { path: "/products", element: <Products /> },
         { path: "/register", element: <Register /> },
         { path: "/login", element: <Login /> },
+        { path: "/forgotPassword", element: <ForgotPassword /> },
         { path: "/cart", element: <Cart /> },
         { path: "/categories", element: <Categories /> },
         { path: "/brands", element: <Categories /> },

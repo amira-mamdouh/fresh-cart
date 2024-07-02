@@ -2,7 +2,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { ColorRing } from "react-loader-spinner";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 
 // Validation schema using Yup
@@ -137,6 +137,11 @@ export default function Login() {
                 "Login"
               )}
             </button>
+            <div className="pt-3">
+              <Link className="text-main forget-link" to="/forgotPassword">
+                Forgotten password?
+              </Link>
+            </div>
           </div>
         </form>
       </div>
