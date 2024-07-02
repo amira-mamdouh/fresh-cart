@@ -7,13 +7,10 @@ import * as yup from "yup";
 
 // Validation schema using Yup
 const mySchema = yup.object({
-  email: yup
-    .string()
-    .email("Invalid email")
-    .required("Please enter your email address to search for your account."),
+  resetCode: yup.number().required("Please enter your reset code."),
 });
 
-export default function ForgotPassword() {
+export default function ResetCode() {
   // State variables to handle loading, success, and error states
   const [isSuccess, setIsSuccess] = useState(false);
   const [isUnSuccess, setIsUnSuccess] = useState(false);
@@ -23,7 +20,7 @@ export default function ForgotPassword() {
 
   // Initial form data
   const userData = {
-    email: "",
+    resetCode: "535863",
   };
 
   // useFormik hook for form handling
@@ -31,28 +28,29 @@ export default function ForgotPassword() {
     initialValues: userData,
     validationSchema: mySchema,
     onSubmit: async function (values) {
-      setIsLoading(true);
+      setIsLoading(true); // Set loading state to true
       try {
+        // Make API request to verify reset code
         const response = await axios.post(
-          `https://ecommerce.routemisr.com/api/v1/auth/forgotPasswords`,
+          `https://ecommerce.routemisr.com/api/v1/auth/verifyResetCode`,
           values
         );
-        setIsSuccess(true);
-        setMessage(response.data.message);
+        setIsSuccess(true); // Set success state to true
+        setMessage(response.data.message); // Set success message
         setTimeout(() => {
-          setIsSuccess(false);
-          navigate("/resetcode");
+          setIsSuccess(false); // Reset success state
+          navigate("/products"); // Navigate to products page
         }, 3000);
       } catch (error) {
         if (error.response) {
-          setIsUnSuccess(true);
-          setMessage(error.response.data.message);
+          setIsUnSuccess(true); // Set error state to true
+          setMessage(error.response.data.message); // Set error message
         }
         setTimeout(() => {
-          setIsUnSuccess(false);
+          setIsUnSuccess(false); // Reset error state
         }, 3000);
       } finally {
-        setIsLoading(false);
+        setIsLoading(false); // Reset loading state
       }
     },
   });
@@ -60,8 +58,8 @@ export default function ForgotPassword() {
   // Function to handle Enter key press
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      event.preventDefault();
-      myFormik.handleSubmit();
+      event.preventDefault(); // Prevent default form submission
+      myFormik.handleSubmit(); // Trigger form submission
     }
   };
 
@@ -69,26 +67,26 @@ export default function ForgotPassword() {
     <>
       <div className="container-sm w-md-75 m-md-auto p-5">
         {isSuccess && (
-          <div className="alert alert-success text-center">{message}</div>
+          <div className="alert alert-success text-center">{message}</div> // Display success message
         )}
         {isUnSuccess && (
-          <div className="alert alert-danger text-center">{message}</div>
+          <div className="alert alert-danger text-center">{message}</div> // Display error message
         )}
-        <h3 className="mb-3">Find Your Account:</h3>
+        <h3 className="mb-3">Verify Reset Code:</h3>
         <form onSubmit={myFormik.handleSubmit} onKeyPress={handleKeyPress}>
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="resetCode">Reset Code:</label>
           <input
-            value={myFormik.values.email}
+            value={myFormik.values.resetCode}
             onChange={myFormik.handleChange}
             onBlur={myFormik.handleBlur}
-            type="email"
-            id="email"
-            name="email"
+            type="text"
+            id="resetCode"
+            name="resetCode"
             className="form-control mb-2"
           />
-          {myFormik.errors.email && (
+          {myFormik.errors.resetCode && (
             <div className="error text-danger mb-3">
-              {myFormik.errors.email}
+              {myFormik.errors.resetCode}
             </div>
           )}
 
@@ -105,7 +103,7 @@ export default function ForgotPassword() {
                   colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
                 />
               ) : (
-                "Search"
+                "Verify"
               )}
             </button>
           </div>
