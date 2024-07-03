@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ColorRing } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { authContext } from "../../Context/AuthContext";
 
 // Validation schema using Yup
 const mySchema = yup.object({
@@ -24,6 +25,7 @@ export default function Login() {
   const [isUnSuccess, setUnIsSuccess] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { setToken } = useContext(authContext);
 
   // Initial form data
   const userData = {
@@ -39,7 +41,9 @@ export default function Login() {
       setIsLoading(true);
       axios
         .post(`https://ecommerce.routemisr.com/api/v1/auth/signin`, values)
-        .then(function () {
+        .then(function (success) {
+          localStorage.setItem("token", success.data.token);
+          setToken(success.data.token);
           setIsSuccess(true);
           setTimeout(() => {
             setIsSuccess(false);

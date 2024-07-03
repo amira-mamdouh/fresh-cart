@@ -1,8 +1,21 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/freshcart-logo.svg";
+import { authContext } from "../../Context/AuthContext";
 
 export default function Navbar() {
+  const { token, setToken } = useContext(authContext);
+  const navigate = useNavigate();
+
+  function logOut() {
+    //1- rempve token from state
+    setToken(null);
+    //2- rempve token from srorege
+    localStorage.removeItem("token");
+    //3- navigate to login component
+    navigate("/login");
+  }
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary px-3">
@@ -22,37 +35,42 @@ export default function Navbar() {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link
-                  className="nav-link active"
-                  aria-current="page"
-                  to="/products"
-                >
-                  Home
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/cart">
-                  Cart
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/products">
-                  Products
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/categories">
-                  Categories
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/brands">
-                  Brands
-                </Link>
-              </li>
-            </ul>
+            {token ? (
+              <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                <li className="nav-item">
+                  <Link
+                    className="nav-link active"
+                    aria-current="page"
+                    to="/products"
+                  >
+                    Home
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/cart">
+                    Cart
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/products">
+                    Products
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/categories">
+                    Categories
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/brands">
+                    Brands
+                  </Link>
+                </li>
+              </ul>
+            ) : (
+              ""
+            )}
+
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
               <li className="nav-item">
                 <ul className="list-unstyled d-flex ">
@@ -76,19 +94,27 @@ export default function Navbar() {
                   </li>
                 </ul>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/login">
-                  Login
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/register">
-                  Register
-                </Link>
-              </li>
-              <li className="nav-item">
-                <span className="nav-link">SignOut</span>
-              </li>
+
+              {token ? (
+                <li className="nav-item">
+                  <span onClick={logOut} role="button" className="nav-link">
+                    SignOut
+                  </span>
+                </li>
+              ) : (
+                <>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/login">
+                      Login
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/register">
+                      Register
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>

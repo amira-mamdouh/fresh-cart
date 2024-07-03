@@ -1,4 +1,3 @@
-import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./Components/Layout/Layout";
 import Register from "./Components/Register/Register";
@@ -10,6 +9,7 @@ import Categories from "./Components/Categories/Categories";
 import ForgotPassword from "./Components/ForgotPassword/ForgotPassword";
 import VerifyResetCode from "./Components/VerifyResetCode/VerifyResetCode";
 import UpdateUserData from "./Components/UpdateUserData/UpdateUserData";
+import { AuthContextProvider } from "./Context/AuthContext";
 
 export default function App() {
   const routing = createBrowserRouter([
@@ -34,7 +34,9 @@ export default function App() {
 
   return (
     <>
-      <RouterProvider router={routing} />
+      <AuthContextProvider>
+        <RouterProvider router={routing} />
+      </AuthContextProvider>
     </>
   );
 }
