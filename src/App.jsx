@@ -10,6 +10,8 @@ import ForgotPassword from "./Components/ForgotPassword/ForgotPassword";
 import VerifyResetCode from "./Components/VerifyResetCode/VerifyResetCode";
 import UpdateUserData from "./Components/UpdateUserData/UpdateUserData";
 import { AuthContextProvider } from "./Context/AuthContext";
+import Brands from "./Components/Brands/Brands";
+import ProtectedRoute from "./Components/Guard/Guard";
 
 export default function App() {
   const routing = createBrowserRouter([
@@ -18,15 +20,43 @@ export default function App() {
       element: <Layout />,
       children: [
         { index: true, element: <Register /> },
-        { path: "/products", element: <Products /> },
-        { path: "/register", element: <Register /> },
-        { path: "/login", element: <Login /> },
-        { path: "/forgotPassword", element: <ForgotPassword /> },
-        { path: "/verifyResetCode", element: <VerifyResetCode /> },
-        { path: "/updateData", element: <UpdateUserData /> },
-        { path: "/cart", element: <Cart /> },
-        { path: "/categories", element: <Categories /> },
-        { path: "/brands", element: <Categories /> },
+        {
+          path: "products",
+          element: (
+            <ProtectedRoute>
+              <Products />
+            </ProtectedRoute>
+          ),
+        },
+        { path: "register", element: <Register /> },
+        { path: "login", element: <Login /> },
+        { path: "forgotPassword", element: <ForgotPassword /> },
+        { path: "verifyResetCode", element: <VerifyResetCode /> },
+        { path: "updateData", element: <UpdateUserData /> },
+        {
+          path: "cart",
+          element: (
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "categories",
+          element: (
+            <ProtectedRoute>
+              <Categories />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "brands",
+          element: (
+            <ProtectedRoute>
+              <Brands />
+            </ProtectedRoute>
+          ),
+        },
         { path: "*", element: <NotFound /> },
       ],
     },
