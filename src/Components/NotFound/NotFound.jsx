@@ -1,5 +1,13 @@
-import React from "react";
+import Img from "../../assets/images/error.svg";
 
 export default function NotFound() {
-  return <div>NotFound</div>;
+  return (
+    <>
+      <div className="container">
+        <div className="p-5 text-center">
+          <img className="w-50 m-auto" src={Img} alt="Not Found" />
+        </div>
+      </div>
+    </>
+  );
 }
