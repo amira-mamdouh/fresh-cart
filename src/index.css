@@ -3,9 +3,7 @@
 :root {
   --main-color: rgb(10, 173, 10);
   --light-color: rgb(240, 243, 242);
-  --shadow: rgba(145, 158, 171, 0.2) 0px 2px 4px -1px,
-    rgba(145, 158, 171, 0.14) 0px 4px 5px 0px,
-    rgba(145, 158, 171, 0.12) 0px 1px 10px 0px;
+  --shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   --font-family: "Encode Sans Expanded", sans-serif;
   --rating-color: #ffc908;
 }
@@ -20,11 +18,20 @@ body {
   cursor: pointer;
 }
 
+.product {
+  padding: 5px;
+  border-radius: 10px;
+}
 .product:hover {
   box-shadow: var(--shadow);
-  border: solid 1px var(--main-color);
 }
-.product .btn {
+
+/* .product img {
+  height: 200px;
+  object-fit: cover;
+} */
+
+/* .product .btn {
   transition: transform 1s, opacity 1s;
   transform: translateY(100%);
   opacity: 0;
@@ -32,7 +39,8 @@ body {
 .product:hover .btn {
   opacity: 1;
   transform: translateY(0%);
-}
+} */
+
 .font-sm {
   font-size: 14px;
 }

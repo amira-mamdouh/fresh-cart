@@ -5,7 +5,7 @@ export default function NotFound() {
     <>
       <div className="container">
         <div className="p-5 text-center">
-          <img className="w-50 m-auto" src={Img} alt="Not Found" />
+          <img className="w-75 m-auto" src={Img} alt="Not Found" />
         </div>
       </div>
     </>
