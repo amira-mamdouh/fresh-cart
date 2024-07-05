@@ -9,7 +9,7 @@ export default function Categories() {
     const { data } = await axios.get(
       `https://ecommerce.routemisr.com/api/v1/categories`
     );
-    setAllCategories(data);
+    setAllCategories(data.data);
   }
 
   useEffect(() => {
@@ -18,21 +18,38 @@ export default function Categories() {
 
   return (
     <>
-      <div className="d-flex vh-100 justify-content-center align-items-center opacity-100 bg-main-light ">
-        <Oval
-          visible={true}
-          height="80"
-          width="80"
-          color="#4fa94d"
-          ariaLabel="oval-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-        />
-      </div>
-
-      <div className="container-fluid">
-        <div className="row">{}</div>
-      </div>
+      {allCategories ? (
+        <div className="container-fluid py-5">
+          <div className="row g-5">
+            {allCategories.map((category, index) => (
+              <div key={index} className="col-6 col-md-3">
+                <div className="category">
+                  <div className="text-center mb-2">
+                    <h3 className="py-2">{category.name}</h3>
+                  </div>
+                  <img
+                    className="w-100"
+                    src={category.image}
+                    alt={category.slug}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="d-flex vh-100 justify-content-center align-items-center opacity-100 bg-main-light ">
+          <Oval
+            visible={true}
+            height="80"
+            width="80"
+            color="#4fa94d"
+            ariaLabel="oval-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          />
+        </div>
+      )}
     </>
   );
 }

@@ -26,10 +26,20 @@ body {
   box-shadow: var(--shadow);
 }
 
-/* .product img {
-  height: 200px;
+.category img {
+  height: 300px;
   object-fit: cover;
-} */
+}
+
+.category {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.category:hover img {
+  transform: scale(1.1);
+}
 
 /* .product .btn {
   transition: transform 1s, opacity 1s;
