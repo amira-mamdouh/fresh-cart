@@ -12,61 +12,66 @@ import UpdateUserData from "./Components/UpdateUserData/UpdateUserData";
 import { AuthContextProvider } from "./Context/AuthContext";
 import Brands from "./Components/Brands/Brands";
 import ProtectedRoute from "./Components/Guard/Guard";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const routing = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      { index: true, element: <Register /> },
+      {
+        path: "products",
+        element: (
+          <ProtectedRoute>
+            <Products />
+          </ProtectedRoute>
+        ),
+      },
+      { path: "register", element: <Register /> },
+      { path: "login", element: <Login /> },
+      { path: "forgotPassword", element: <ForgotPassword /> },
+      { path: "verifyResetCode", element: <VerifyResetCode /> },
+      { path: "updateData", element: <UpdateUserData /> },
+      {
+        path: "cart",
+        element: (
+          <ProtectedRoute>
+            <Cart />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "categories",
+        element: (
+          <ProtectedRoute>
+            <Categories />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "brands",
+        element: (
+          <ProtectedRoute>
+            <Brands />
+          </ProtectedRoute>
+        ),
+      },
+      { path: "*", element: <NotFound /> },
+    ],
+  },
+]);
 
 export default function App() {
-  const routing = createBrowserRouter([
-    {
-      path: "/",
-      element: <Layout />,
-      children: [
-        { index: true, element: <Register /> },
-        {
-          path: "products",
-          element: (
-            <ProtectedRoute>
-              <Products />
-            </ProtectedRoute>
-          ),
-        },
-        { path: "register", element: <Register /> },
-        { path: "login", element: <Login /> },
-        { path: "forgotPassword", element: <ForgotPassword /> },
-        { path: "verifyResetCode", element: <VerifyResetCode /> },
-        { path: "updateData", element: <UpdateUserData /> },
-        {
-          path: "cart",
-          element: (
-            <ProtectedRoute>
-              <Cart />
-            </ProtectedRoute>
-          ),
-        },
-        {
-          path: "categories",
-          element: (
-            <ProtectedRoute>
-              <Categories />
-            </ProtectedRoute>
-          ),
-        },
-        {
-          path: "brands",
-          element: (
-            <ProtectedRoute>
-              <Brands />
-            </ProtectedRoute>
-          ),
-        },
-        { path: "*", element: <NotFound /> },
-      ],
-    },
-  ]);
+  const myClient = new QueryClient();
 
   return (
     <>
-      <AuthContextProvider>
-        <RouterProvider router={routing} />
-      </AuthContextProvider>
+      <QueryClientProvider client={myClient}>
+        <AuthContextProvider>
+          <RouterProvider router={routing} />
+        </AuthContextProvider>
+      </QueryClientProvider>
     </>
   );
 }
