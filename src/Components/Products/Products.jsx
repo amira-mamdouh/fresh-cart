@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Oval } from "react-loader-spinner";
+import { useQuery } from "react-query";
 
 export default function Products() {
   const [allProducts, setAllProducts] = useState(null);
@@ -12,6 +13,9 @@ export default function Products() {
     );
     setAllProducts(data.data);
   }
+
+  useQuery();
+
   useEffect(() => {
     getAllProducts();
   }, []);
