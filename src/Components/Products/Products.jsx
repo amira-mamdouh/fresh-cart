@@ -1,27 +1,29 @@
 import axios from "axios";
-import { useState } from "react";
-import { useEffect } from "react";
 import { Oval } from "react-loader-spinner";
 import { useQuery } from "react-query";
 
 export default function Products() {
-  // const [allProducts, setAllProducts] = useState(null);
-
   async function getAllProducts() {
-    const { data } = await axios.get(
-      `https://ecommerce.routemisr.com/api/v1/products`
-    );
-    // setAllProducts(data.data);
+    await axios.get(`https://ecommerce.routemisr.com/api/v1/products`);
   }
 
-  const { data, isError, isFetching, isLoading } = useQuery(
-    "getAllProducts",
-    getAllProducts
-  );
+  const { data, isLoading } = useQuery("getAllProducts", getAllProducts);
 
-  // useEffect(() => {
-  //   getAllProducts();
-  // }, []);
+  if (isLoading) {
+    return (
+      <div className="d-flex vh-100 justify-content-center align-items-center opacity-100 bg-main-light ">
+        <Oval
+          visible={true}
+          height="80"
+          width="80"
+          color="#4fa94d"
+          ariaLabel="oval-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -46,18 +48,6 @@ export default function Products() {
             </div>
           ))}
         </div>
-      </div>
-
-      <div className="d-flex vh-100 justify-content-center align-items-center opacity-100 bg-main-light ">
-        <Oval
-          visible={true}
-          height="80"
-          width="80"
-          color="#4fa94d"
-          ariaLabel="oval-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-        />
       </div>
     </>
   );
