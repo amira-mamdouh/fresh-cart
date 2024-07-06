@@ -14,7 +14,7 @@ export default function Products() {
     setAllProducts(data.data);
   }
 
-  useQuery();
+  useQuery("getAllProducts", getAllProducts);
 
   useEffect(() => {
     getAllProducts();
