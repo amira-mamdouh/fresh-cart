@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 
 export default function Products() {
   async function getAllProducts() {
-    await axios.get(`https://ecommerce.routemisr.com/api/v1/products`);
+    return await axios.get(`https://ecommerce.routemisr.com/api/v1/products`);
   }
 
   const { data, isLoading } = useQuery("getAllProducts", getAllProducts);
