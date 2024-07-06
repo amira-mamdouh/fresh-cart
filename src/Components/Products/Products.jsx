@@ -14,7 +14,10 @@ export default function Products() {
     setAllProducts(data.data);
   }
 
-  useQuery("getAllProducts", getAllProducts);
+  const { data, isError, isFetching, isLoading } = useQuery(
+    "getAllProducts",
+    getAllProducts
+  );
 
   useEffect(() => {
     getAllProducts();
