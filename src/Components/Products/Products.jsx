@@ -9,7 +9,8 @@ export default function Products() {
 
   const { data, isLoading } = useQuery("getAllProducts", getAllProducts, {
     // refetchOnMount: false,
-    refetchInterval: 3000,
+    // refetchInterval: 3000,
+    cacheTime: 3000,
   });
 
   if (isLoading) {
