@@ -7,7 +7,9 @@ export default function Products() {
     return await axios.get(`https://ecommerce.routemisr.com/api/v1/products`);
   }
 
-  const { data, isLoading } = useQuery("getAllProducts", getAllProducts);
+  const { data, isLoading } = useQuery("getAllProducts", getAllProducts, {
+    refetchOnMount: false,
+  });
 
   if (isLoading) {
     return (
