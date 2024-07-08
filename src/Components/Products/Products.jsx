@@ -8,7 +8,8 @@ export default function Products() {
   }
 
   const { data, isLoading } = useQuery("getAllProducts", getAllProducts, {
-    refetchOnMount: false,
+    // refetchOnMount: false,
+    refetchInterval: 3000,
   });
 
   if (isLoading) {
