@@ -1,17 +1,14 @@
 import axios from "axios";
 import { Oval } from "react-loader-spinner";
 import { useQuery } from "react-query";
+import SimpleSlider from "../HomeSlider/HomeSlider";
 
 export default function Products() {
   async function getAllProducts() {
     return await axios.get(`https://ecommerce.routemisr.com/api/v1/products`);
   }
 
-  const { data, isLoading } = useQuery("getAllProducts", getAllProducts, {
-    // refetchOnMount: false,
-    // refetchInterval: 3000,
-    // cacheTime: 1000,
-  });
+  const { data, isLoading } = useQuery("getAllProducts", getAllProducts);
 
   if (isLoading) {
     return (
@@ -32,6 +29,8 @@ export default function Products() {
   return (
     <>
       <div className="container-fluid px-5">
+        <SimpleSlider />
+
         <div className="row">
           {data.data.data.map((product, index) => (
             <div key={index} className="col-6 col-md-2">
