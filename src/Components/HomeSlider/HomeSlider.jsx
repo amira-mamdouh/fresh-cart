@@ -19,25 +19,61 @@ export default function SimpleSlider() {
     slidesToScroll: 1,
   };
   return (
-    <Slider {...settings}>
-      <div>
-        <img className="w-100" src={sliderImage1} alt="Slider Img" />
+    <div className="row">
+      <div className="col-md-9">
+        <Slider {...settings}>
+          <div>
+            <img
+              style={{ height: "300px" }}
+              className="w-100"
+              src={sliderImage1}
+              alt="Slider Img"
+            />
+          </div>
+          <div>
+            <img
+              style={{ height: "300px" }}
+              className="w-100"
+              src={sliderImage2}
+              alt="Slider Img"
+            />
+          </div>
+          <div>
+            <img
+              style={{ height: "300px" }}
+              className="w-100"
+              src={sliderImage3}
+              alt="Slider Img"
+            />
+          </div>
+          <div>
+            <img
+              style={{ height: "300px" }}
+              className="w-100"
+              src={sliderImage4}
+              alt="Slider Img"
+            />
+          </div>
+        </Slider>
       </div>
-      <div>
-        <img className="w-100" src={sliderImage2} alt="Slider Img" />
+      <div className="col-md-3">
+        <div>
+          <img
+            style={{ height: "150px" }}
+            className="w-100"
+            src={groceryBanner1}
+            alt="Slider Img"
+          />
+        </div>
+        <div>
+          <img
+            style={{ height: "150px" }}
+            className="w-100"
+            src={groceryBanner2}
+            alt="Slider Img"
+          />
+        </div>
       </div>
-      <div>
-        <img className="w-100" src={sliderImage3} alt="Slider Img" />
-      </div>
-      <div>
-        <img className="w-100" src={sliderImage4} alt="Slider Img" />
-      </div>
-      <div>
-        <img className="w-100" src={groceryBanner1} alt="Slider Img" />
-      </div>
-      <div>
-        <img className="w-100" src={groceryBanner2} alt="Slider Img" />
-      </div>
-    </Slider>
+    </div>
   );
 }

@@ -31,7 +31,7 @@ export default function Products() {
       <div className="container-fluid px-5">
         <SimpleSlider />
 
-        <div className="row">
+        <div className="row mt-3">
           {data.data.data.map((product, index) => (
             <div key={index} className="col-6 col-md-2">
               <div className="product mb-3">
