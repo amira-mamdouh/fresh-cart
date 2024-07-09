@@ -24,7 +24,7 @@ export default function SimpleSlider() {
         <Slider {...settings}>
           <div>
             <img
-              style={{ height: "300px", objectFit: "cover" }}
+              style={{ height: "300px" }}
               className="w-100"
               src={sliderImage1}
               alt="Slider Img"
@@ -32,7 +32,7 @@ export default function SimpleSlider() {
           </div>
           <div>
             <img
-              style={{ height: "300px", objectFit: "cover" }}
+              style={{ height: "300px" }}
               className="w-100"
               src={sliderImage2}
               alt="Slider Img"
@@ -40,7 +40,7 @@ export default function SimpleSlider() {
           </div>
           <div>
             <img
-              style={{ height: "300px", objectFit: "cover" }}
+              style={{ height: "300px" }}
               className="w-100"
               src={sliderImage3}
               alt="Slider Img"
@@ -48,7 +48,7 @@ export default function SimpleSlider() {
           </div>
           <div>
             <img
-              style={{ height: "300px", objectFit: "cover" }}
+              style={{ height: "300px" }}
               className="w-100"
               src={sliderImage4}
               alt="Slider Img"
