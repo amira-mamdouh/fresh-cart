@@ -7,11 +7,11 @@ import { Oval } from "react-loader-spinner";
 
 export default function CategoriesSlider() {
   var settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 7,
-    slidesToScroll: 1,
+    slidesToScroll: 2,
   };
 
   function getAllCategories() {

@@ -22,7 +22,7 @@ body {
   padding: 5px;
   border-radius: 10px;
 }
-.product:hover {
+.main-hover:hover {
   box-shadow: var(--shadow);
 }
 
@@ -80,4 +80,10 @@ a:hover {
 }
 .forget-link:hover {
   text-decoration: underline;
+}
+
+.homeSlider > * {
+  padding-right: 0px;
+  padding-left: 0px;
+  max-height: 350px;
 }

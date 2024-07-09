@@ -19,12 +19,12 @@ export default function SimpleSlider() {
     slidesToScroll: 1,
   };
   return (
-    <div className="row my-5">
-      <div className="col-md-9">
+    <div className="row homeSlider my-5">
+      <div className="col-12 col-md-9">
         <Slider {...settings}>
           <div>
             <img
-              style={{ height: "300px" }}
+              style={{ height: "350px" }}
               className="w-100"
               src={sliderImage1}
               alt="Slider Img"
@@ -32,7 +32,7 @@ export default function SimpleSlider() {
           </div>
           <div>
             <img
-              style={{ height: "300px" }}
+              style={{ height: "350px" }}
               className="w-100"
               src={sliderImage2}
               alt="Slider Img"
@@ -40,7 +40,7 @@ export default function SimpleSlider() {
           </div>
           <div>
             <img
-              style={{ height: "300px" }}
+              style={{ height: "350px" }}
               className="w-100"
               src={sliderImage3}
               alt="Slider Img"
@@ -48,7 +48,7 @@ export default function SimpleSlider() {
           </div>
           <div>
             <img
-              style={{ height: "300px" }}
+              style={{ height: "350px" }}
               className="w-100"
               src={sliderImage4}
               alt="Slider Img"
@@ -56,10 +56,10 @@ export default function SimpleSlider() {
           </div>
         </Slider>
       </div>
-      <div className="col-md-3">
+      <div className="col-0 col-md-3">
         <div>
           <img
-            style={{ height: "150px" }}
+            style={{ height: "175px" }}
             className="w-100"
             src={groceryBanner1}
             alt="Slider Img"
@@ -67,7 +67,7 @@ export default function SimpleSlider() {
         </div>
         <div>
           <img
-            style={{ height: "150px" }}
+            style={{ height: "175px" }}
             className="w-100"
             src={groceryBanner2}
             alt="Slider Img"

@@ -34,11 +34,11 @@ export default function Products() {
         <SimpleSlider />
         <CategoriesSlider />
 
-        <div className="row mt-3">
+        <div className="row mt-3 g-3">
           {data.data.data.map((product, index) => (
-            <div key={index} className="col-6 col-md-2">
+            <div key={index} className="main-hover col-12 col-md-2">
               <Link to={`/productDetails/${product.id}`}>
-                <div className="product mb-3">
+                <div className="product">
                   <img className="w-100" src={product.imageCover} alt="" />
                   <h3 className="mt-2 h6 text-main">{product.category.name}</h3>
                   <h2 className="h6">
@@ -53,6 +53,12 @@ export default function Products() {
                   </div>
                 </div>
               </Link>
+              <button
+                className="btn bg-main text-white w-100 mb-2"
+                type="button"
+              >
+                + add
+              </button>
             </div>
           ))}
         </div>
