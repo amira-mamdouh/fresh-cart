@@ -13,6 +13,7 @@ import { AuthContextProvider } from "./Context/AuthContext";
 import Brands from "./Components/Brands/Brands";
 import ProtectedRoute from "./Components/Guard/Guard";
 import { QueryClient, QueryClientProvider } from "react-query";
+import ProductDetails from "./Components/ProductDetails/ProductDetails";
 
 const routing = createBrowserRouter([
   {
@@ -28,11 +29,20 @@ const routing = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        path: "productDetails",
+        element: (
+          <ProtectedRoute>
+            <ProductDetails />
+          </ProtectedRoute>
+        ),
+      },
       { path: "register", element: <Register /> },
       { path: "login", element: <Login /> },
       { path: "forgotPassword", element: <ForgotPassword /> },
       { path: "verifyResetCode", element: <VerifyResetCode /> },
       { path: "updateData", element: <UpdateUserData /> },
+
       {
         path: "cart",
         element: (

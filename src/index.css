@@ -51,6 +51,12 @@ body {
   transform: translateY(0%);
 } */
 
+a,
+a:hover {
+  color: black;
+  text-decoration: none;
+}
+
 .font-sm {
   font-size: 14px;
 }
