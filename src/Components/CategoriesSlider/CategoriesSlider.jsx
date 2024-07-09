@@ -39,7 +39,11 @@ export default function CategoriesSlider() {
   return (
     <div className="row">
       <Slider {...settings}>
-        {data.data.data.map((category, index) => {})}
+        {data.data.data.map((category, index) => (
+          <div key={index}>
+            <img className="w-100" src={category.image} alt={category.slug} />
+          </div>
+        ))}
       </Slider>
     </div>
   );

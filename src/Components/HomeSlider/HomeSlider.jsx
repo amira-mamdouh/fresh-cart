@@ -19,7 +19,7 @@ export default function SimpleSlider() {
     slidesToScroll: 1,
   };
   return (
-    <div className="row">
+    <div className="row my-4">
       <div className="col-md-9">
         <Slider {...settings}>
           <div>

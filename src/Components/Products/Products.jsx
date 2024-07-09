@@ -2,6 +2,7 @@ import axios from "axios";
 import { Oval } from "react-loader-spinner";
 import { useQuery } from "react-query";
 import SimpleSlider from "../HomeSlider/HomeSlider";
+import CategoriesSlider from "../CategoriesSlider/CategoriesSlider";
 
 export default function Products() {
   async function getAllProducts() {
@@ -30,6 +31,7 @@ export default function Products() {
     <>
       <div className="container-fluid px-5">
         <SimpleSlider />
+        <CategoriesSlider />
 
         <div className="row mt-3">
           {data.data.data.map((product, index) => (
