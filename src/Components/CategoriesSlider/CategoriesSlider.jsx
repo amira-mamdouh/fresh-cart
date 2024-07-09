@@ -10,7 +10,7 @@ export default function CategoriesSlider() {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 1,
+    slidesToShow: 8,
     slidesToScroll: 1,
   };
 
@@ -41,7 +41,12 @@ export default function CategoriesSlider() {
       <Slider {...settings}>
         {data.data.data.map((category, index) => (
           <div key={index}>
-            <img className="w-100" src={category.image} alt={category.slug} />
+            <img
+              style={{ height: "200px" }}
+              className="w-100"
+              src={category.image}
+              alt={category.slug}
+            />
             <h4 className="py-2">{category.name}</h4>
           </div>
         ))}
