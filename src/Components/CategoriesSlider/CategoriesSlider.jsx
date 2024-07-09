@@ -3,6 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useQuery } from "react-query";
 import axios from "axios";
+import { Oval } from "react-loader-spinner";
 
 export default function CategoriesSlider() {
   var settings = {
@@ -17,15 +18,29 @@ export default function CategoriesSlider() {
     return axios.get(`https://ecommerce.routemisr.com/api/v1/categories`);
   }
 
-  const { data } = useQuery("getAllCategories", getAllCategories);
+  const { data, isLoading } = useQuery("getAllCategories", getAllCategories);
+
+  if (isLoading) {
+    return (
+      <div className="d-flex vh-100 justify-content-center align-items-center opacity-100 bg-main-light ">
+        <Oval
+          visible={true}
+          height="80"
+          width="80"
+          color="#4fa94d"
+          ariaLabel="oval-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="row">
-      <div className="col-md-9">
-        <Slider {...settings}>
-          {data.data.data.map((category, index) => {})}
-        </Slider>
-      </div>
+      <Slider {...settings}>
+        {data.data.data.map((category, index) => {})}
+      </Slider>
     </div>
   );
 }
