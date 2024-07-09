@@ -37,7 +37,7 @@ export default function Products() {
         <div className="row mt-3">
           {data.data.data.map((product, index) => (
             <div key={index} className="col-6 col-md-2">
-              <Link to={"/productDetails"}>
+              <Link to={`/productDetails/${product.id}`}>
                 <div className="product mb-3">
                   <img className="w-100" src={product.imageCover} alt="" />
                   <h3 className="mt-2 h6 text-main">{product.category.name}</h3>

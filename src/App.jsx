@@ -30,7 +30,7 @@ const routing = createBrowserRouter([
         ),
       },
       {
-        path: "productDetails",
+        path: "productDetails/:id",
         element: (
           <ProtectedRoute>
             <ProductDetails />
