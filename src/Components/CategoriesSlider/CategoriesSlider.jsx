@@ -10,7 +10,7 @@ export default function CategoriesSlider() {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 8,
+    slidesToShow: 7,
     slidesToScroll: 1,
   };
 
@@ -47,7 +47,7 @@ export default function CategoriesSlider() {
               src={category.image}
               alt={category.slug}
             />
-            <h4 className="py-2">{category.name}</h4>
+            <h4 className="py-2 h6">{category.name}</h4>
           </div>
         ))}
       </Slider>
