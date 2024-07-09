@@ -42,6 +42,7 @@ export default function CategoriesSlider() {
         {data.data.data.map((category, index) => (
           <div key={index}>
             <img className="w-100" src={category.image} alt={category.slug} />
+            <h4 className="py-2">{category.name}</h4>
           </div>
         ))}
       </Slider>
