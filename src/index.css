@@ -26,6 +26,18 @@ body {
   box-shadow: var(--shadow);
 }
 
+.main-hover {
+  overflow: hidden;
+}
+
+.main-hover .btnAdd {
+  transform: translateY(200%);
+  transition: 0.5s all;
+}
+.main-hover:hover .btnAdd {
+  transform: translateY(0%);
+}
+
 .category img {
   height: 300px;
   object-fit: cover;

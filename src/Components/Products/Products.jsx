@@ -1,9 +1,9 @@
 import axios from "axios";
-import { Oval } from "react-loader-spinner";
 import { useQuery } from "react-query";
 import SimpleSlider from "../HomeSlider/HomeSlider";
 import CategoriesSlider from "../CategoriesSlider/CategoriesSlider";
 import { Link } from "react-router-dom";
+import Loading from "../Loading/Loading";
 
 export default function Products() {
   async function getAllProducts() {
@@ -13,19 +13,7 @@ export default function Products() {
   const { data, isLoading } = useQuery("getAllProducts", getAllProducts);
 
   if (isLoading) {
-    return (
-      <div className="d-flex vh-100 justify-content-center align-items-center opacity-100 bg-main-light ">
-        <Oval
-          visible={true}
-          height="80"
-          width="80"
-          color="#4fa94d"
-          ariaLabel="oval-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-        />
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
@@ -54,7 +42,7 @@ export default function Products() {
                 </div>
               </Link>
               <button
-                className="btn bg-main text-white w-100 mb-2"
+                className="btnAdd btn bg-main text-white w-100 mb-2"
                 type="button"
               >
                 + add
