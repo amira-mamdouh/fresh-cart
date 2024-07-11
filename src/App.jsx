@@ -14,6 +14,7 @@ import Brands from "./Components/Brands/Brands";
 import ProtectedRoute from "./Components/Guard/Guard";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ProductDetails from "./Components/ProductDetails/ProductDetails";
+import CartContextProvider from "./Context/CartContext";
 
 const routing = createBrowserRouter([
   {
@@ -78,9 +79,11 @@ export default function App() {
   return (
     <>
       <QueryClientProvider client={myClient}>
-        <AuthContextProvider>
-          <RouterProvider router={routing} />
-        </AuthContextProvider>
+        <CartContextProvider>
+          <AuthContextProvider>
+            <RouterProvider router={routing} />
+          </AuthContextProvider>
+        </CartContextProvider>
       </QueryClientProvider>
     </>
   );
