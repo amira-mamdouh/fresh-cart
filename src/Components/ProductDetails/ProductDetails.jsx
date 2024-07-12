@@ -13,7 +13,9 @@ export default function ProductDetails() {
 
   async function addProduct(id) {
     const res = await addProductToCart(id);
-    console.log(res);
+    if (res.status === "success") {
+      console.log("add");
+    }
   }
 
   function getProductDetails() {

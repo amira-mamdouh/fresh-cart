@@ -1,12 +1,11 @@
 import axios from "axios";
 import { createContext } from "react";
-import { date } from "yup";
 
 export const cartContext = createContext();
 
 export default function CartContextProvider({ children }) {
   function addProductToCart(id) {
-    axios
+    return axios
       .post(
         `https://ecommerce.routemisr.com/api/v1/cart`,
         {
@@ -16,11 +15,11 @@ export default function CartContextProvider({ children }) {
           headers: { token: localStorage.getItem("token") },
         }
       )
-      .then((success) => {
-        console.log(success);
+      .then((response) => {
+        return response.data;
       })
       .catch((error) => {
-        console.log(error);
+        throw error;
       });
   }
 
