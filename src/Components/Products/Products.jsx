@@ -1,18 +1,26 @@
 import axios from "axios";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import SimpleSlider from "../HomeSlider/HomeSlider";
 import CategoriesSlider from "../CategoriesSlider/CategoriesSlider";
 import { Link } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import { useContext } from "react";
 import { cartContext } from "../../Context/CartContext";
+import { ColorRing } from "react-loader-spinner";
 
 export default function Products() {
   const { addProductToCart } = useContext(cartContext);
 
-  function addProduct(id) {
-    addProductToCart(id);
-  }
+  const addProductMutation = useMutation(addProductToCart, {
+    onSuccess: (data) => {
+      if (data.status === "success") {
+        console.log("Product added to cart");
+      }
+    },
+    onError: (error) => {
+      console.error("Error adding product to cart:", error);
+    },
+  });
 
   async function getAllProducts() {
     return await axios.get(`https://ecommerce.routemisr.com/api/v1/products`);
@@ -50,11 +58,24 @@ export default function Products() {
                 </div>
               </Link>
               <button
-                onClick={() => addProduct(data.data.data.id)}
-                className="btnAdd btn bg-main text-white w-100 mb-2"
+                onClick={() => addProductMutation.mutate(product.id)}
+                className="btn bg-main text-white w-100 mt-3"
                 type="button"
+                disabled={addProductMutation.isLoading}
               >
-                + add
+                {addProductMutation.isLoading ? (
+                  <ColorRing
+                    visible={true}
+                    height="35"
+                    width="35"
+                    ariaLabel="color-ring-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="color-ring-wrapper"
+                    colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
+                  />
+                ) : (
+                  "+ add to cart"
+                )}
               </button>
             </div>
           ))}
