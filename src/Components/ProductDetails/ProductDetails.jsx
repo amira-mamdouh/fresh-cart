@@ -2,9 +2,17 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import { Navigate, useParams } from "react-router-dom";
 import Loading from "../Loading/Loading";
+import { useContext } from "react";
+import { cartContext } from "../../Context/CartContext";
 
 export default function ProductDetails() {
+  const { addProductToCart } = useContext(cartContext);
+
   const { id } = useParams();
+
+  async function addProduct(id) {
+    await addProductToCart(id);
+  }
 
   function getProductDetails() {
     return axios.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`);
@@ -51,6 +59,7 @@ export default function ProductDetails() {
                 </span>
               </div>
               <button
+                onClick={() => addProduct(dataDetails.id)}
                 className="btn bg-main text-white w-100 mt-3"
                 type="button"
               >

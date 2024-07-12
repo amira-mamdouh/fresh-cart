@@ -4,8 +4,12 @@ import SimpleSlider from "../HomeSlider/HomeSlider";
 import CategoriesSlider from "../CategoriesSlider/CategoriesSlider";
 import { Link } from "react-router-dom";
 import Loading from "../Loading/Loading";
+import { useContext } from "react";
+import { cartContext } from "../../Context/CartContext";
 
 export default function Products() {
+  const { addProductToCart } = useContext(cartContext);
+
   async function getAllProducts() {
     return await axios.get(`https://ecommerce.routemisr.com/api/v1/products`);
   }
