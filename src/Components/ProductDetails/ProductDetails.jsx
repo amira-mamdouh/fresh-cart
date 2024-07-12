@@ -4,6 +4,7 @@ import { Navigate, useParams } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import { useContext } from "react";
 import { cartContext } from "../../Context/CartContext";
+// import { ColorRing } from "react-loader-spinner";
 
 export default function ProductDetails() {
   const { addProductToCart } = useContext(cartContext);
@@ -11,7 +12,8 @@ export default function ProductDetails() {
   const { id } = useParams();
 
   async function addProduct(id) {
-    await addProductToCart(id);
+    const res = await addProductToCart(id);
+    console.log(res);
   }
 
   function getProductDetails() {
@@ -63,6 +65,19 @@ export default function ProductDetails() {
                 className="btn bg-main text-white w-100 mt-3"
                 type="button"
               >
+                {/* {isLoading ? (
+                  <ColorRing
+                    visible={true}
+                    height="35"
+                    width="35"
+                    ariaLabel="color-ring-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="color-ring-wrapper"
+                    colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
+                  />
+                ) : (
+                  "+ add to cart"
+                )} */}
                 + add to cart
               </button>
             </article>
