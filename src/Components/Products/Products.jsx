@@ -10,6 +10,10 @@ import { cartContext } from "../../Context/CartContext";
 export default function Products() {
   const { addProductToCart } = useContext(cartContext);
 
+  function addProduct(id) {
+    addProductToCart(id);
+  }
+
   async function getAllProducts() {
     return await axios.get(`https://ecommerce.routemisr.com/api/v1/products`);
   }
@@ -46,6 +50,7 @@ export default function Products() {
                 </div>
               </Link>
               <button
+                onClick={() => addProduct(data.data.data.id)}
                 className="btnAdd btn bg-main text-white w-100 mb-2"
                 type="button"
               >
