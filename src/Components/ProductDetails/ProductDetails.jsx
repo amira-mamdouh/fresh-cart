@@ -1,25 +1,22 @@
 import axios from "axios";
-import { useQuery, useMutation } from "react-query";
+import { useQuery } from "react-query";
 import { Navigate, useParams } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import { useContext } from "react";
 import { cartContext } from "../../Context/CartContext";
-import { ColorRing } from "react-loader-spinner";
+// import { ColorRing } from "react-loader-spinner";
 
 export default function ProductDetails() {
   const { addProductToCart } = useContext(cartContext);
+
   const { id } = useParams();
 
-  const addProductMutation = useMutation(addProductToCart, {
-    onSuccess: (data) => {
-      if (data.status === "success") {
-        console.log("Product added to cart");
-      }
-    },
-    onError: (error) => {
-      console.error("Error adding product to cart:", error);
-    },
-  });
+  async function addProduct(id) {
+    const res = await addProductToCart(id);
+    if (res.status === "success") {
+      console.log("add");
+    }
+  }
 
   function getProductDetails() {
     return axios.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`);
@@ -41,52 +38,54 @@ export default function ProductDetails() {
   const dataDetails = data.data.data;
 
   return (
-    <div className="container-fluid">
-      <div className="row align-items-center py-5">
-        <div className="col-12 col-md-3">
-          <figure>
-            <img
-              className="w-100"
-              src={dataDetails.imageCover}
-              alt={dataDetails.title}
-            />
-          </figure>
-        </div>
-        <div className="col-12 col-md-9">
-          <article>
-            <h1>{dataDetails.title}</h1>
-            <p className="px-1">{dataDetails.description}</p>
-            <h6 className="fw-bold">{dataDetails.category.name}</h6>
-            <div className="d-flex justify-content-between">
-              <span>{dataDetails.price} EGP</span>
-              <span className="me-md-5">
-                <i className="text-warning me-1 fa-solid fa-star"></i>
-                {dataDetails.ratingsAverage}
-              </span>
-            </div>
-            <button
-              onClick={() => addProductMutation.mutate(dataDetails._id)}
-              className="btn bg-main text-white w-100 mt-3"
-              type="button"
-              disabled={addProductMutation.isLoading}
-            >
-              {addProductMutation.isLoading ? (
-                <ColorRing
-                  visible={true}
-                  height="35"
-                  width="35"
-                  ariaLabel="color-ring-loading"
-                  wrapperStyle={{}}
-                  wrapperClass="color-ring-wrapper"
-                  colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
-                />
-              ) : (
-                "+ add to cart"
-              )}
-            </button>
-          </article>
+    <>
+      <div className="container-fluid">
+        <div className="row align-items-center py-5">
+          <div className="col-12 col-md-3">
+            <figure>
+              <img
+                className="w-100"
+                src={dataDetails.imageCover}
+                alt={dataDetails.title}
+              />
+            </figure>
+          </div>
+          <div className="col-12 col-md-9">
+            <article>
+              <h1>{dataDetails.title}</h1>
+              <p className="px-1">{dataDetails.description}</p>
+              <h6 className="fw-bold">{dataDetails.category.name}</h6>
+              <div className="d-flex justify-content-between">
+                <span>{dataDetails.price} EGP</span>
+                <span className="me-md-5">
+                  <i className="text-warning me-1 fa-solid fa-star"></i>
+                  {dataDetails.ratingsAverage}
+                </span>
+              </div>
+              <button
+                onClick={() => addProduct(dataDetails.id)}
+                className="btn bg-main text-white w-100 mt-3"
+                type="button"
+              >
+                {/* {isLoading ? (
+                  <ColorRing
+                    visible={true}
+                    height="35"
+                    width="35"
+                    ariaLabel="color-ring-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="color-ring-wrapper"
+                    colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
+                  />
+                ) : (
+                  "+ add to cart"
+                )} */}
+                + add to cart
+              </button>
+            </article>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
