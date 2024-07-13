@@ -104,3 +104,9 @@ a:hover {
 .slick-next:before {
   color: var(--main-color);
 }
+
+@media (max-width: 768px) {
+  .small-disabled {
+    display: none !important;
+  }
+}

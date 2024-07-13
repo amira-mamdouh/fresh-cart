@@ -26,6 +26,24 @@ export default function SimpleSlider() {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          dots: true,
+        },
+      },
+    ],
   };
 
   return (
@@ -38,8 +56,8 @@ export default function SimpleSlider() {
           <ImageSliderItem src={sliderImage4} alt="Slider Img 4" />
         </Slider>
       </div>
-      <div className="col-12 col-md-3">
-        <div>
+      <div className="col-12 col-md-3 small-disabled">
+        <div className="mb-2">
           <img
             style={{ height: "calc(50vw)", maxHeight: "175px" }}
             className="w-100"

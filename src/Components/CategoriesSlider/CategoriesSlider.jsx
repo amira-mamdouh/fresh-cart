@@ -6,16 +6,18 @@ import axios from "axios";
 import Loading from "../Loading/Loading";
 
 export default function CategoriesSlider() {
-  // إعدادات الـSlider
+  // Slider settings
   const settings = {
     dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 7,
     slidesToScroll: 2,
+    autoplay: true,
+    autoplaySpeed: 3000, // Moves every 3 seconds
     responsive: [
       {
-        breakpoint: 1024, // عند عرض الشاشة أقل من 1024 بكسل
+        breakpoint: 1024, // When the screen width is less than 1024px
         settings: {
           slidesToShow: 5,
           slidesToScroll: 2,
@@ -24,7 +26,7 @@ export default function CategoriesSlider() {
         },
       },
       {
-        breakpoint: 600, // عند عرض الشاشة أقل من 600 بكسل
+        breakpoint: 600, // When the screen width is less than 600px
         settings: {
           slidesToShow: 3,
           slidesToScroll: 2,
@@ -32,7 +34,7 @@ export default function CategoriesSlider() {
         },
       },
       {
-        breakpoint: 480, // عند عرض الشاشة أقل من 480 بكسل
+        breakpoint: 480, // When the screen width is less than 480px
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
@@ -41,25 +43,25 @@ export default function CategoriesSlider() {
     ],
   };
 
-  // دالة لجلب جميع الفئات من API
+  // Function to fetch all categories from API
   async function getAllCategories() {
     return axios.get(`https://ecommerce.routemisr.com/api/v1/categories`);
   }
 
-  // استخدام useQuery لجلب البيانات
+  // Using useQuery to fetch data
   const { data, isLoading, isError } = useQuery(
     "getAllCategories",
     getAllCategories
   );
 
-  // عرض مكون Loading في حالة جلب البيانات
+  // Display Loading component while fetching data
   if (isLoading) {
     return <Loading />;
   }
 
-  // عرض رسالة خطأ في حالة حدوث خطأ
+  // Display error message if an error occurs
   if (isError) {
-    return <div>حدث خطأ ما. يرجى المحاولة لاحقاً.</div>;
+    return <div>An error occurred. Please try again later.</div>;
   }
 
   return (
