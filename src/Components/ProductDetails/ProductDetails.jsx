@@ -82,7 +82,6 @@ export default function ProductDetails() {
                 className="btn bg-main text-white w-100 mt-3"
                 type="button"
               >
-                {/* Commented out loading spinner, uncomment if needed. */}
                 {/* {isLoading ? (
                   <ColorRing
                     visible={true}
