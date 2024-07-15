@@ -4,7 +4,7 @@ import { Navigate, useParams } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import { useContext } from "react";
 import { cartContext } from "../../Context/CartContext";
-// import { ColorRing } from "react-loader-spinner"; // Commented out loading spinner import.
+import toast from "react-hot-toast";
 
 export default function ProductDetails() {
   // Get the addProductToCart function from the cartContext to handle adding products to the cart.
@@ -17,7 +17,15 @@ export default function ProductDetails() {
   async function addProduct(id) {
     const res = await addProductToCart(id); // Call addProductToCart with the product ID.
     if (res.status === "success") {
-      console.log("Product added to cart successfully");
+      toast.success("Product added to cart successfully", {
+        duration: 2000,
+        position: "bottom-right",
+      });
+    } else {
+      toast.error("Faild to add", {
+        duration: 2000,
+        position: "bottom-right",
+      });
     }
   }
 
@@ -82,19 +90,6 @@ export default function ProductDetails() {
                 className="btn bg-main text-white w-100 mt-3"
                 type="button"
               >
-                {/* {isLoading ? (
-                  <ColorRing
-                    visible={true}
-                    height="35"
-                    width="35"
-                    ariaLabel="color-ring-loading"
-                    wrapperStyle={{}}
-                    wrapperClass="color-ring-wrapper"
-                    colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
-                  />
-                ) : (
-                  "+ add to cart"
-                )} */}
                 + add to cart
               </button>
             </article>

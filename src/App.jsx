@@ -15,6 +15,7 @@ import ProtectedRoute from "./Components/Guard/Guard";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ProductDetails from "./Components/ProductDetails/ProductDetails";
 import CartContextProvider from "./Context/CartContext";
+import { Toaster } from "react-hot-toast";
 
 const routing = createBrowserRouter([
   {
@@ -79,12 +80,14 @@ export default function App() {
   return (
     <>
       <QueryClientProvider client={myClient}>
-        <CartContextProvider>
-          <AuthContextProvider>
+        <AuthContextProvider>
+          <CartContextProvider>
             <RouterProvider router={routing} />
-          </AuthContextProvider>
-        </CartContextProvider>
+          </CartContextProvider>
+        </AuthContextProvider>
       </QueryClientProvider>
+
+      <Toaster />
     </>
   );
 }
