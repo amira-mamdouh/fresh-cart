@@ -16,46 +16,37 @@ export default function VerifyResetCode() {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  const userData = {
-    resetCode: "",
-  };
-
   const myFormik = useFormik({
-    initialValues: userData,
+    initialValues: {
+      resetCode: "",
+    },
     validationSchema: mySchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       setIsLoading(true);
-      axios
-        .post(
+      setIsUnSuccess(false);
+      try {
+        await axios.post(
           `https://ecommerce.routemisr.com/api/v1/auth/verifyResetCode`,
           values
-        )
-        .then(() => {
-          navigate("/updateData", {
-            state: { resetCode: values.resetCode },
-          });
-        })
-        .catch((error) => {
-          if (error.response) {
-            setIsUnSuccess(true);
-            setMessage(error.response.data.message);
-          }
-          setTimeout(() => {
-            setIsUnSuccess(false);
-          }, 3000);
-        })
-        .finally(() => {
-          setIsLoading(false);
+        );
+        navigate("/updateData", {
+          state: { resetCode: values.resetCode },
         });
+      } catch (error) {
+        if (error.response) {
+          setMessage(error.response.data.message);
+        } else {
+          setMessage("An unexpected error occurred.");
+        }
+        setIsUnSuccess(true);
+        setTimeout(() => {
+          setIsUnSuccess(false);
+        }, 3000);
+      } finally {
+        setIsLoading(false);
+      }
     },
   });
-
-  const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      myFormik.handleSubmit();
-    }
-  };
 
   return (
     <div className="container-sm w-md-75 m-md-auto p-5">
@@ -63,7 +54,7 @@ export default function VerifyResetCode() {
         <div className="alert alert-danger text-center">{message}</div>
       )}
       <h3 className="mb-3">Verify Reset Code:</h3>
-      <form onSubmit={myFormik.handleSubmit} onKeyPress={handleKeyPress}>
+      <form onSubmit={myFormik.handleSubmit}>
         <label htmlFor="resetCode">Reset Code:</label>
         <input
           value={myFormik.values.resetCode}
@@ -72,15 +63,23 @@ export default function VerifyResetCode() {
           type="text"
           id="resetCode"
           name="resetCode"
-          className="form-control mb-2"
+          className={`form-control mb-2 ${
+            myFormik.errors.resetCode && myFormik.touched.resetCode
+              ? "is-invalid"
+              : ""
+          }`}
         />
-        {myFormik.errors.resetCode && (
-          <div className="error text-danger mb-3">
+        {myFormik.touched.resetCode && myFormik.errors.resetCode && (
+          <div className="invalid-feedback mb-3">
             {myFormik.errors.resetCode}
           </div>
         )}
         <div className="button text-end">
-          <button className="btn bg-main text-white" type="submit">
+          <button
+            className="btn bg-main text-white"
+            type="submit"
+            disabled={isLoading}
+          >
             {isLoading ? (
               <ColorRing
                 visible={true}
