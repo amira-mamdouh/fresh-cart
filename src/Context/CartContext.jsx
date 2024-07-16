@@ -11,22 +11,19 @@ export default function CartContextProvider({ children }) {
   const [totalCartPrice, setTotalCartPrice] = useState(0);
   const [allProducts, setAllProducts] = useState(null);
 
-  async function addProductToCart(id) {
+  function addProductToCart(id) {
     return axios
       .post(
         `https://ecommerce.routemisr.com/api/v1/cart`,
-        {
-          productId: id,
-        },
-        {
-          headers: { token: localStorage.getItem("token") },
-        }
+        { productId: id },
+        { headers: { token: localStorage.getItem("token") } }
       )
       .then((response) => {
-        getUserCart();
+        getUserCart(); // Update the cart after adding a product
         return response.data;
       })
       .catch((error) => {
+        console.error("Error adding product to cart:", error);
         throw error;
       });
   }
@@ -42,12 +39,14 @@ export default function CartContextProvider({ children }) {
         setAllProducts(res.data.data.products);
       })
       .catch((err) => {
-        console.log(err);
+        console.error("Error fetching user cart:", err);
       });
   }
 
   useEffect(() => {
-    getUserCart();
+    if (token) {
+      getUserCart();
+    }
   }, [token]);
 
   return (
