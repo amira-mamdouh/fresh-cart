@@ -11,21 +11,6 @@ export default function CartContextProvider({ children }) {
   const [totalCartPrice, setTotalCartPrice] = useState(0);
   const [allProducts, setAllProducts] = useState(null);
 
-  function getUserCart() {
-    axios
-      .get(`https://ecommerce.routemisr.com/api/v1/cart`, {
-        headers: { token: localStorage.getItem("token") },
-      })
-      .then((res) => {
-        setNumOfCartItems(res.data.numOfCartItems);
-        setTotalCartPrice(res.data.data.totalCartPrice);
-        setAllProducts(res.data.data.products);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
   async function addProductToCart(id) {
     return axios
       .post(
@@ -38,10 +23,26 @@ export default function CartContextProvider({ children }) {
         }
       )
       .then((response) => {
+        getUserCart();
         return response.data;
       })
       .catch((error) => {
         throw error;
+      });
+  }
+
+  function getUserCart() {
+    axios
+      .get(`https://ecommerce.routemisr.com/api/v1/cart`, {
+        headers: { token: localStorage.getItem("token") },
+      })
+      .then((res) => {
+        setNumOfCartItems(res.data.numOfCartItems);
+        setTotalCartPrice(res.data.data.totalCartPrice);
+        setAllProducts(res.data.data.products);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }
 
