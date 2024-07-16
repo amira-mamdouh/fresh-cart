@@ -2,9 +2,11 @@ import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/freshcart-logo.svg";
 import { authContext } from "../../Context/AuthContext";
+import { cartContext } from "../../Context/CartContext";
 
 export default function Navbar() {
   const { token, setToken } = useContext(authContext);
+  const { numOfCartItems } = useContext(cartContext);
   const navigate = useNavigate();
 
   function logOut() {
@@ -18,7 +20,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary px-3">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary p-3">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             <img src={logo} alt="fresh cart logo" />
@@ -46,11 +48,7 @@ export default function Navbar() {
                     Home
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/cart">
-                    Cart
-                  </Link>
-                </li>
+
                 <li className="nav-item">
                   <Link className="nav-link" to="/products">
                     Products
@@ -65,6 +63,14 @@ export default function Navbar() {
                   <Link className="nav-link" to="/brands">
                     Brands
                   </Link>
+                </li>
+                <li className="nav-item position-relative">
+                  <Link className="nav-link" to="/cart">
+                    Cart
+                  </Link>
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-3 bg-main">
+                    {numOfCartItems ?? ""}
+                  </span>
                 </li>
               </ul>
             ) : (

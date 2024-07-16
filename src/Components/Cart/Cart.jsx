@@ -37,11 +37,11 @@ export default function Cart() {
                 </div>
                 <div className="col-md-9">
                   <h3>{product.product.title}</h3>
-                  <p className="text-success">
+                  <p className="text-main">
                     <span>{product.price} EGP</span>
                   </p>
                   <div className="remove-item">
-                    <FaTrashAlt className="text-success" />
+                    <FaTrashAlt className="text-main" />
                     <button className="btn text-danger">Remove</button>
                   </div>
                 </div>
