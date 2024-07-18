@@ -56,8 +56,7 @@ export default function Cart() {
             </div>
           ))}
           <div className="d-flex justify-content-between">
-            <a className="btn bg-main text-white">CheckOut</a>
-            <p>Total cart Price: 1000 EGP</p>
+            {/* <link className="btn bg-main text-white">CheckOut</link> */}
           </div>
         </div>
       </div>
