@@ -43,6 +43,33 @@ export default function CartContextProvider({ children }) {
       });
   }
 
+  async function updateCount(id, newCount) {
+    const booleanFlag = await axios
+      .put(
+        `https://ecommerce.routemisr.com/api/v1/cart/${id}`,
+        {
+          count: newCount,
+        },
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      )
+      .then((res) => {
+        setNumOfCartItems(res.data.numOfCartItems);
+        setTotalCartPrice(res.data.data.totalCartPrice);
+        setAllProducts(res.data.data.products);
+        return true;
+      })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
+
+    return booleanFlag;
+  }
+
   useEffect(() => {
     if (token) {
       getUserCart();
@@ -56,6 +83,7 @@ export default function CartContextProvider({ children }) {
         numOfCartItems,
         totalCartPrice,
         allProducts,
+        updateCount,
       }}
     >
       {children}

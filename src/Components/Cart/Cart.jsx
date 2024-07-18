@@ -2,13 +2,26 @@ import { useContext } from "react";
 import { cartContext } from "../../Context/CartContext";
 import { FaTrashAlt } from "react-icons/fa";
 import Loading from "../Loading/Loading";
+import toast from "react-hot-toast";
 
 export default function Cart() {
-  const { numOfCartItems, totalCartPrice, allProducts } =
-    useContext(cartContext);
+  const { updateCount, totalCartPrice, allProducts } = useContext(cartContext);
 
   if (!allProducts) {
     return <Loading />;
+  }
+
+  async function updateProductCount(id, newCount) {
+    const res = await updateCount(id, newCount);
+    if (res) {
+      toast.success("Product updated successfully", {
+        position: "top-right",
+      });
+    } else {
+      toast.error("Product updated faild", {
+        position: "top-right",
+      });
+    }
   }
 
   return (
@@ -47,9 +60,30 @@ export default function Cart() {
                 </div>
                 <div className="col-md-2">
                   <div className="d-flex align-items-center">
-                    <button className="btn btn-outline-success mx-2">-</button>
+                    <button
+                      disabled={product.count == 1}
+                      onClick={() => {
+                        updateProductCount(
+                          product.product.id,
+                          product.count - 1
+                        );
+                      }}
+                      className="btn btn-outline-success mx-2"
+                    >
+                      -
+                    </button>
                     <span>{product.count}</span>
-                    <button className="btn btn-outline-success mx-2">+</button>
+                    <button
+                      onClick={() => {
+                        updateProductCount(
+                          product.product.id,
+                          product.count + 1
+                        );
+                      }}
+                      className="btn btn-outline-success mx-2"
+                    >
+                      +
+                    </button>
                   </div>
                 </div>
               </div>
