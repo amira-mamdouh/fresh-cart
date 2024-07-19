@@ -5,7 +5,6 @@ import { ColorRing } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 
-// Validation schema using Yup
 const mySchema = yup.object({
   resetCode: yup.string().required("Please enter your reset code."),
 });
@@ -29,9 +28,8 @@ export default function VerifyResetCode() {
           `https://ecommerce.routemisr.com/api/v1/auth/verifyResetCode`,
           values
         );
-        navigate("/updateData", {
-          state: { resetCode: values.resetCode },
-        });
+        localStorage.setItem("resetCode", values.resetCode);
+        navigate("/updateData");
       } catch (error) {
         if (error.response) {
           setMessage(error.response.data.message);

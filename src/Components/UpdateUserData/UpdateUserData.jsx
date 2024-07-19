@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { authContext } from "../../Context/AuthContext";
 
-// Validation schema for password reset
 const mySchema = yup.object({
   password: yup
     .string()
@@ -22,72 +21,54 @@ const mySchema = yup.object({
     .oneOf([yup.ref("password")], "Passwords must match"),
 });
 
-// Component for updating user data and resetting password
-export default function UpdateUserData() {
+export default function UpdatePassword() {
   const [isSuccess, setIsSuccess] = useState(false);
-  const [isUnSuccess, setUnIsSuccess] = useState(undefined);
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { resetPassword, setToken } = useContext(authContext); // useContext to get resetPassword and setToken
+  const { resetPassword } = useContext(authContext);
 
-  // Initial form data
-  const userData = {
-    password: "",
-    rePassword: "",
-  };
-
-  // useFormik hook for form handling
   const myFormik = useFormik({
-    initialValues: userData,
+    initialValues: {
+      password: "",
+      rePassword: "",
+    },
     validationSchema: mySchema,
     onSubmit: function (values) {
       setIsLoading(true);
-      axios
-        .put(
-          `https://ecommerce.routemisr.com/api/v1/users/changeMyPassword`,
-          {
-            currentPassword: values.currentPassword,
-            password: values.password,
-            rePassword: values.rePassword,
-          },
-          {
-            headers: {
-              token: localStorage.getItem("token"),
-            },
-          }
-        )
-        .then(function () {
-          // Reset password
-          resetPassword(values.email, values.password);
+      const email = localStorage.getItem("resetEmail");
+      const resetCode = localStorage.getItem("resetCode");
 
-          // Update token (assuming the server response includes a new token)
-          setToken("newToken"); // Replace "newToken" with the actual new token from response
+      if (!email || !resetCode) {
+        setError(
+          "Missing email or reset code. Please start the process again."
+        );
+        setIsLoading(false);
+        return;
+      }
 
+      resetPassword(email, values.password, resetCode)
+        .then(() => {
           setIsSuccess(true);
           setTimeout(() => {
             setIsSuccess(false);
             navigate("/login");
           }, 3000);
-          setIsLoading(false);
         })
-        .catch(function (errors) {
-          // Improved error handling
-          if (errors.response) {
-            setUnIsSuccess(errors.response.data.message);
-          } else if (errors.request) {
-            setUnIsSuccess("Network error, please try again later.");
-          } else {
-            setUnIsSuccess("An error occurred. Please try again.");
-          }
+        .catch((err) => {
+          setError(err.message || "An error occurred. Please try again.");
           setTimeout(() => {
-            setUnIsSuccess(false);
+            setError(null);
           }, 3000);
+        })
+        .finally(() => {
           setIsLoading(false);
+          localStorage.removeItem("resetEmail");
+          localStorage.removeItem("resetCode");
         });
     },
   });
 
-  // Function to handle Enter key press
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -96,75 +77,62 @@ export default function UpdateUserData() {
   };
 
   return (
-    <>
-      <div className="container-sm w-md-75 m-md-auto p-5">
-        {isSuccess ? (
-          <div className="alert alert-success text-center">
-            Congratulations, your password has been updated.
+    <div className="container-sm w-md-75 m-md-auto p-5">
+      {isSuccess && (
+        <div className="alert alert-success text-center">
+          Congratulations, your password has been updated.
+        </div>
+      )}
+      {error && <div className="alert alert-danger text-center">{error}</div>}
+      <h3 className="mb-3">Reset Password:</h3>
+      <form onSubmit={myFormik.handleSubmit} onKeyPress={handleKeyPress}>
+        <label htmlFor="password">New Password:</label>
+        <input
+          value={myFormik.values.password}
+          onChange={myFormik.handleChange}
+          onBlur={myFormik.handleBlur}
+          type="password"
+          id="password"
+          name="password"
+          className="form-control mb-2"
+        />
+        {myFormik.errors.password && (
+          <div className="error text-danger mb-3">
+            {myFormik.errors.password}
           </div>
-        ) : (
-          ""
         )}
-        {isUnSuccess ? (
-          <div className="alert alert-danger text-center">{isUnSuccess}</div>
-        ) : (
-          ""
-        )}
-        <h3 className="mb-3">Reset Password:</h3>
-        <form onSubmit={myFormik.handleSubmit} onKeyPress={handleKeyPress}>
-          <label htmlFor="password">New Password:</label>
-          <input
-            value={myFormik.values.password}
-            onChange={myFormik.handleChange}
-            onBlur={myFormik.handleBlur}
-            type="password"
-            id="password"
-            name="password"
-            className="form-control mb-2"
-          />
-          {myFormik.errors.password ? (
-            <div className="error text-danger mb-3">
-              {myFormik.errors.password}
-            </div>
-          ) : (
-            ""
-          )}
-          <label htmlFor="rePassword">Re-enter New Password:</label>
-          <input
-            value={myFormik.values.rePassword}
-            onChange={myFormik.handleChange}
-            onBlur={myFormik.handleBlur}
-            type="password"
-            id="rePassword"
-            name="rePassword"
-            className="form-control mb-2"
-          />
-          {myFormik.errors.rePassword ? (
-            <div className="error text-danger mb-3">
-              {myFormik.errors.rePassword}
-            </div>
-          ) : (
-            ""
-          )}
-          <div className="button text-end">
-            <button className="btn bg-main text-white" type="submit">
-              {isLoading ? (
-                <ColorRing
-                  visible={true}
-                  height="35"
-                  width="35"
-                  ariaLabel="color-ring-loading"
-                  wrapperStyle={{}}
-                  wrapperClass="color-ring-wrapper"
-                  colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
-                />
-              ) : (
-                "Reset"
-              )}
-            </button>
+        <label htmlFor="rePassword">Re-enter New Password:</label>
+        <input
+          value={myFormik.values.rePassword}
+          onChange={myFormik.handleChange}
+          onBlur={myFormik.handleBlur}
+          type="password"
+          id="rePassword"
+          name="rePassword"
+          className="form-control mb-2"
+        />
+        {myFormik.errors.rePassword && (
+          <div className="error text-danger mb-3">
+            {myFormik.errors.rePassword}
           </div>
-        </form>
-      </div>
-    </>
+        )}
+        <div className="button text-end">
+          <button className="btn bg-main text-white" type="submit">
+            {isLoading ? (
+              <ColorRing
+                visible={true}
+                height="35"
+                width="35"
+                ariaLabel="color-ring-loading"
+                wrapperClass="color-ring-wrapper"
+                colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
+              />
+            ) : (
+              "Reset"
+            )}
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }

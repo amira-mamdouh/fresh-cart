@@ -5,7 +5,6 @@ import { ColorRing } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 
-// Validation schema using Yup
 const mySchema = yup.object({
   email: yup
     .string()
@@ -14,21 +13,16 @@ const mySchema = yup.object({
 });
 
 export default function ForgotPassword() {
-  // State variables to handle loading, success, and error states
   const [isSuccess, setIsSuccess] = useState(false);
   const [isUnSuccess, setIsUnSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  // Initial form data
-  const userData = {
-    email: "",
-  };
-
-  // useFormik hook for form handling
   const myFormik = useFormik({
-    initialValues: userData,
+    initialValues: {
+      email: "",
+    },
     validationSchema: mySchema,
     onSubmit: async function (values) {
       setIsLoading(true);
@@ -39,6 +33,7 @@ export default function ForgotPassword() {
         );
         setIsSuccess(true);
         setMessage(response.data.message);
+        localStorage.setItem("resetEmail", values.email);
         setTimeout(() => {
           setIsSuccess(false);
           navigate("/verifyResetCode");
@@ -57,7 +52,6 @@ export default function ForgotPassword() {
     },
   });
 
-  // Function to handle Enter key press
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -66,51 +60,46 @@ export default function ForgotPassword() {
   };
 
   return (
-    <>
-      <div className="container-sm w-md-75 m-md-auto p-5">
-        {isSuccess && (
-          <div className="alert alert-success text-center">{message}</div>
+    <div className="container-sm w-md-75 m-md-auto p-5">
+      {isSuccess && (
+        <div className="alert alert-success text-center">{message}</div>
+      )}
+      {isUnSuccess && (
+        <div className="alert alert-danger text-center">{message}</div>
+      )}
+      <h3 className="mb-3">Find Your Account:</h3>
+      <form onSubmit={myFormik.handleSubmit} onKeyPress={handleKeyPress}>
+        <label htmlFor="email">Email:</label>
+        <input
+          value={myFormik.values.email}
+          onChange={myFormik.handleChange}
+          onBlur={myFormik.handleBlur}
+          type="email"
+          id="email"
+          name="email"
+          className="form-control mb-2"
+        />
+        {myFormik.errors.email && (
+          <div className="error text-danger mb-3">{myFormik.errors.email}</div>
         )}
-        {isUnSuccess && (
-          <div className="alert alert-danger text-center">{message}</div>
-        )}
-        <h3 className="mb-3">Find Your Account:</h3>
-        <form onSubmit={myFormik.handleSubmit} onKeyPress={handleKeyPress}>
-          <label htmlFor="email">Email:</label>
-          <input
-            value={myFormik.values.email}
-            onChange={myFormik.handleChange}
-            onBlur={myFormik.handleBlur}
-            type="email"
-            id="email"
-            name="email"
-            className="form-control mb-2"
-          />
-          {myFormik.errors.email && (
-            <div className="error text-danger mb-3">
-              {myFormik.errors.email}
-            </div>
-          )}
-
-          <div className="button text-end">
-            <button className="btn bg-main text-white" type="submit">
-              {isLoading ? (
-                <ColorRing
-                  visible={true}
-                  height="35"
-                  width="35"
-                  ariaLabel="color-ring-loading"
-                  wrapperStyle={{}}
-                  wrapperClass="color-ring-wrapper"
-                  colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
-                />
-              ) : (
-                "Search"
-              )}
-            </button>
-          </div>
-        </form>
-      </div>
-    </>
+        <div className="button text-end">
+          <button className="btn bg-main text-white" type="submit">
+            {isLoading ? (
+              <ColorRing
+                visible={true}
+                height="35"
+                width="35"
+                ariaLabel="color-ring-loading"
+                wrapperStyle={{}}
+                wrapperClass="color-ring-wrapper"
+                colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
+              />
+            ) : (
+              "Search"
+            )}
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }
