@@ -69,7 +69,7 @@ export default function Navbar() {
                     Cart
                   </Link>
                   <span className="position-absolute top-0 start-100 translate-middle badge rounded-3 bg-main">
-                    {numOfCartItems ?? ""}
+                    {numOfCartItems ? numOfCartItems : ""}
                   </span>
                 </li>
               </ul>

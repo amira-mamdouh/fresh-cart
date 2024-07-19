@@ -80,7 +80,6 @@ export function AuthContextProvider({ children }) {
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
-      console.log("Token found in local storage:", storedToken);
       setToken(storedToken);
     }
   }, []);
