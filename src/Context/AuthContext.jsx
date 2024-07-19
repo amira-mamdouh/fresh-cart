@@ -54,7 +54,7 @@ export function AuthContextProvider({ children }) {
 
     const currentToken = localStorage.getItem("token");
     if (!currentToken) {
-      console.error("No token found. Please log in again.");
+      console.error("No token found. Please login again.");
       return;
     }
 
