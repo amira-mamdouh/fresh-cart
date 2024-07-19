@@ -45,15 +45,10 @@ export default function Navbar() {
                     aria-current="page"
                     to="/products"
                   >
-                    Home
-                  </Link>
-                </li>
-
-                <li className="nav-item">
-                  <Link className="nav-link" to="/products">
                     Products
                   </Link>
                 </li>
+
                 <li className="nav-item">
                   <Link className="nav-link" to="/categories">
                     Categories
