@@ -70,6 +70,23 @@ export default function CartContextProvider({ children }) {
     return booleanFlag;
   }
 
+  function deletProduct(id) {
+    axios
+      .delete(`https://ecommerce.routemisr.com/api/v1/cart/${id}`, {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        setNumOfCartItems(res.data.numOfCartItems);
+        setTotalCartPrice(res.data.data.totalCartPrice);
+        setAllProducts(res.data.data.products);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   useEffect(() => {
     if (token) {
       getUserCart();
@@ -84,6 +101,7 @@ export default function CartContextProvider({ children }) {
         totalCartPrice,
         allProducts,
         updateCount,
+        deletProduct,
       }}
     >
       {children}

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useFormik } from "formik";
 import { useContext, useState } from "react";
 import { ColorRing } from "react-loader-spinner";
