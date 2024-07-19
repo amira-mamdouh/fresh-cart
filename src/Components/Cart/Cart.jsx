@@ -5,7 +5,8 @@ import Loading from "../Loading/Loading";
 import toast from "react-hot-toast";
 
 export default function Cart() {
-  const { updateCount, totalCartPrice, allProducts } = useContext(cartContext);
+  const { updateCount, totalCartPrice, allProducts, deletProduct } =
+    useContext(cartContext);
 
   if (!allProducts) {
     return <Loading />;
@@ -21,6 +22,15 @@ export default function Cart() {
       toast.error("Product updated faild", {
         position: "top-right",
       });
+    }
+  }
+
+  async function deleteProduct(id) {
+    const res = await deletProduct(id);
+    if (res) {
+      toast.success("Deleted successfully");
+    } else {
+      toast.error("Deleted faild");
     }
   }
 
@@ -55,7 +65,14 @@ export default function Cart() {
                   </p>
                   <div className="remove-item">
                     <FaTrashAlt className="text-main" />
-                    <button className="btn text-danger">Remove</button>
+                    <button
+                      onClick={() => {
+                        deleteProduct(product.product.id);
+                      }}
+                      className="btn text-danger"
+                    >
+                      Remove
+                    </button>
                   </div>
                 </div>
                 <div className="col-md-2">
