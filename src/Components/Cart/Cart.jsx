@@ -9,13 +9,27 @@ export default function Cart() {
     updateCount,
     totalCartPrice,
     allProducts,
-
     deletProduct,
     deletAllProduct,
+    loading,
+    error,
   } = useContext(cartContext);
 
-  if (!allProducts) {
+  if (loading) {
     return <Loading />;
+  }
+
+  if (error) {
+    return (
+      <div className="container-fluid p-5">
+        <h2>Shop Cart:</h2>
+        <p>Total cart price: {totalCartPrice} EGP</p>
+
+        <h2 className="alert alert-warning text-center my-5">
+          No products in your cart
+        </h2>
+      </div>
+    );
   }
 
   async function updateProductCount(id, newCount) {
@@ -25,7 +39,7 @@ export default function Cart() {
         position: "top-right",
       });
     } else {
-      toast.error("Product updated faild", {
+      toast.error("Product update failed", {
         position: "top-right",
       });
     }
@@ -36,7 +50,7 @@ export default function Cart() {
     if (res) {
       toast.success("Deleted successfully");
     } else {
-      toast.error("Deleted faild");
+      toast.error("Deletion failed");
     }
   }
 
@@ -45,98 +59,89 @@ export default function Cart() {
     if (res) {
       toast.success("Deleted successfully");
     } else {
-      toast.error("Deleted faild");
+      toast.error("Deletion failed");
     }
   }
 
   return (
-    <>
-      <div className="container-fluid p-5">
-        <h2>Shop Cart:</h2>
-        <p>Total cart price: {totalCartPrice} EGP</p>
+    <div className="container-fluid p-5">
+      <h2>Shop Cart:</h2>
+      <p>Total cart price: {totalCartPrice} EGP</p>
 
-        {allProducts.length ? (
-          <div className="my-5">
-            <button
-              onClick={() => {
-                deleteAllProduct();
-              }}
-              className="btn btn-outline-danger d-block ms-auto"
-            >
-              Clear Cart
-            </button>
+      {allProducts.length ? (
+        <div className="my-5">
+          <button
+            onClick={deleteAllProduct}
+            className="btn btn-outline-danger d-block ms-auto"
+          >
+            Clear Cart
+          </button>
 
-            {allProducts.map((product, index) => (
-              <div
-                key={index}
-                className="cart-product shadow p-3 rounded-2 my-3"
-              >
-                <div className="row align-items-center">
-                  <div className="col-md-1">
-                    <img
-                      className="w-100"
-                      src={product.product.imageCover}
-                      alt=""
-                    />
+          {allProducts.map((product, index) => (
+            <div key={index} className="cart-product shadow p-3 rounded-2 my-3">
+              <div className="row align-items-center">
+                <div className="col-md-1">
+                  <img
+                    className="w-100"
+                    src={product.product.imageCover}
+                    alt=""
+                  />
+                </div>
+                <div className="col-md-9">
+                  <h3>{product.product.title}</h3>
+                  <p className="text-main">
+                    <span>{product.price} EGP</span>
+                  </p>
+                  <div className="remove-item">
+                    <FaTrashAlt className="text-main" />
+                    <button
+                      onClick={() => deleteProduct(product.product.id)}
+                      className="btn text-danger"
+                    >
+                      Remove
+                    </button>
                   </div>
-                  <div className="col-md-9">
-                    <h3>{product.product.title}</h3>
-                    <p className="text-main">
-                      <span>{product.price} EGP</span>
-                    </p>
-                    <div className="remove-item">
-                      <FaTrashAlt className="text-main" />
-                      <button
-                        onClick={() => {
-                          deleteProduct(product.product.id);
-                        }}
-                        className="btn text-danger"
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  </div>
-                  <div className="col-md-2">
-                    <div className="d-flex align-items-center">
-                      <button
-                        disabled={product.count == 1}
-                        onClick={() => {
-                          updateProductCount(
-                            product.product.id,
-                            product.count - 1
-                          );
-                        }}
-                        className="btn btn-outline-success mx-2"
-                      >
-                        -
-                      </button>
-                      <span>{product.count}</span>
-                      <button
-                        onClick={() => {
-                          updateProductCount(
-                            product.product.id,
-                            product.count + 1
-                          );
-                        }}
-                        className="btn btn-outline-success mx-2"
-                      >
-                        +
-                      </button>
-                    </div>
+                </div>
+                <div className="col-md-2">
+                  <div className="d-flex align-items-center">
+                    <button
+                      disabled={product.count === 1}
+                      onClick={() =>
+                        updateProductCount(
+                          product.product.id,
+                          product.count - 1
+                        )
+                      }
+                      className="btn btn-outline-success mx-2"
+                    >
+                      -
+                    </button>
+                    <span>{product.count}</span>
+                    <button
+                      onClick={() =>
+                        updateProductCount(
+                          product.product.id,
+                          product.count + 1
+                        )
+                      }
+                      className="btn btn-outline-success mx-2"
+                    >
+                      +
+                    </button>
                   </div>
                 </div>
               </div>
-            ))}
-            <div className="d-flex justify-content-between">
-              {/* <link className="btn bg-main text-white">CheckOut</link> */}
             </div>
+          ))}
+          <div className="d-flex justify-content-between">
+            {/* <link className="btn bg-main text-white">CheckOut</link> */}
           </div>
-        ) : (
-          <h2 className="alert alert-warning text-center my-5">
-            No products in your cart
-          </h2>
-        )}
-      </div>
-    </>
+        </div>
+      ) : (
+        <h2 className="alert alert-warning text-center my-5">
+          No products in your cart
+        </h2>
+      )}
+    </div>
   );
 }
