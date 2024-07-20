@@ -10,6 +10,8 @@ export default function CartContextProvider({ children }) {
   const [numOfCartItems, setNumOfCartItems] = useState(0);
   const [totalCartPrice, setTotalCartPrice] = useState(0);
   const [allProducts, setAllProducts] = useState(null);
+  const [cartId, setCartId] = useState(null);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -41,6 +43,7 @@ export default function CartContextProvider({ children }) {
         setNumOfCartItems(res.data.numOfCartItems);
         setTotalCartPrice(res.data.data.totalCartPrice);
         setAllProducts(res.data.data.products);
+        setCartId(res.data.data._id);
         setLoading(false);
       })
       .catch((err) => {
