@@ -16,6 +16,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import ProductDetails from "./Components/ProductDetails/ProductDetails";
 import CartContextProvider from "./Context/CartContext";
 import { Toaster } from "react-hot-toast";
+import Payment from "./Components/Payment/Payment";
 
 const routing = createBrowserRouter([
   {
@@ -43,8 +44,9 @@ const routing = createBrowserRouter([
       { path: "login", element: <Login /> },
       { path: "forgotPassword", element: <ForgotPassword /> },
       { path: "verifyResetCode", element: <VerifyResetCode /> },
-      { path: "updateData", element: <UpdateUserData /> },
 
+      { path: "updateData", element: <UpdateUserData /> },
+      { path: "/payment", element: <Payment /> },
       {
         path: "cart",
         element: (

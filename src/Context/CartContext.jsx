@@ -144,6 +144,7 @@ export default function CartContextProvider({ children }) {
         allProducts,
         loading,
         error,
+        cartId,
         updateCount,
         deletProduct,
         deletAllProduct,

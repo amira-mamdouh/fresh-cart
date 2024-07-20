@@ -134,7 +134,9 @@ export default function Cart() {
             </div>
           ))}
           <div className="d-flex justify-content-between">
-            {/* <link className="btn bg-main text-white">CheckOut</link> */}
+            <link to={"/payment"} className="btn bg-main text-white">
+              CheckOut
+            </link>
           </div>
         </div>
       ) : (
