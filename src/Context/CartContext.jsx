@@ -149,6 +149,7 @@ export default function CartContextProvider({ children }) {
         deletProduct,
         deletAllProduct,
         getUserCart,
+        setNumOfCartItems,
       }}
     >
       {children}

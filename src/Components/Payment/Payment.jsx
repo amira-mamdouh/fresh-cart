@@ -20,7 +20,7 @@ export default function Payment() {
   const [isUnSuccess, setUnIsSuccess] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { cartId, getUserCart } = useContext(cartContext);
+  const { cartId, getUserCart, setNumOfCartItems } = useContext(cartContext);
 
   // Initial form data
   const userData = {
@@ -47,6 +47,7 @@ export default function Payment() {
           setIsSuccess(true);
           toast.success("payment completed");
           getUserCart();
+          setNumOfCartItems(0);
           setTimeout(() => {
             setIsSuccess(false);
             navigate("/products");

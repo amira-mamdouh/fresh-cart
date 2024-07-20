@@ -9,6 +9,7 @@ export default function Cart() {
   const {
     updateCount,
     totalCartPrice,
+
     allProducts,
     deletProduct,
     deletAllProduct,
