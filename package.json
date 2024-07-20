@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://amira-mamdouh/github.com/fresh-cart",
+  "homepage": "https://amira-mamdouh/github.io/fresh-cart",
   "scripts": {
     "dev": "vite",
     "predeploy": "npm run build",

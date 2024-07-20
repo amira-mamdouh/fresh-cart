@@ -20,12 +20,12 @@ import Payment from "./Components/Payment/Payment";
 
 const routing = createBrowserRouter([
   {
-    path: "/",
+    path: "/fresh-cart/",
     element: <Layout />,
     children: [
       { index: true, element: <Register /> },
       {
-        path: "products",
+        path: "/fresh-cart/products",
         element: (
           <ProtectedRoute>
             <Products />
@@ -33,22 +33,22 @@ const routing = createBrowserRouter([
         ),
       },
       {
-        path: "productDetails/:id",
+        path: "/fresh-cart/productDetails/:id",
         element: (
           <ProtectedRoute>
             <ProductDetails />
           </ProtectedRoute>
         ),
       },
-      { path: "register", element: <Register /> },
-      { path: "login", element: <Login /> },
-      { path: "forgotPassword", element: <ForgotPassword /> },
-      { path: "verifyResetCode", element: <VerifyResetCode /> },
+      { path: "/fresh-cart/register", element: <Register /> },
+      { path: "/fresh-cart/login", element: <Login /> },
+      { path: "/fresh-cart/forgotPassword", element: <ForgotPassword /> },
+      { path: "/fresh-cart/verifyResetCode", element: <VerifyResetCode /> },
 
-      { path: "updateData", element: <UpdateUserData /> },
-      { path: "/payment", element: <Payment /> },
+      { path: "/fresh-cart/updateData", element: <UpdateUserData /> },
+      { path: "/fresh-cart/payment", element: <Payment /> },
       {
-        path: "cart",
+        path: "/fresh-cart/cart",
         element: (
           <ProtectedRoute>
             <Cart />
@@ -56,7 +56,7 @@ const routing = createBrowserRouter([
         ),
       },
       {
-        path: "categories",
+        path: "/fresh-cart/categories",
         element: (
           <ProtectedRoute>
             <Categories />
@@ -64,14 +64,14 @@ const routing = createBrowserRouter([
         ),
       },
       {
-        path: "brands",
+        path: "/fresh-cart/brands",
         element: (
           <ProtectedRoute>
             <Brands />
           </ProtectedRoute>
         ),
       },
-      { path: "*", element: <NotFound /> },
+      { path: "/fresh-cart/*", element: <NotFound /> },
     ],
   },
 ]);
