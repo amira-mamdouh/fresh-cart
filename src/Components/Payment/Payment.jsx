@@ -20,7 +20,7 @@ export default function Payment() {
   const [isUnSuccess, setUnIsSuccess] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { cartId } = useContext(cartContext);
+  const { cartId, getUserCart } = useContext(cartContext);
 
   // Initial form data
   const userData = {
@@ -35,33 +35,38 @@ export default function Payment() {
     validationSchema: mySchema,
     onSubmit: function (values) {
       setIsLoading(true);
-  axios
-    .post(`https://ecommerce.routemisr.com/api/v1/orders/${cartId}`, values, {
-      headers: { token: localStorage.getItem("token") },
-    })
-    .then(function () {
-      setIsSuccess(true);
-      toast.success("payment completed");
-      setTimeout(() => {
-        setIsSuccess(false);
-        navigate("/login");
-      }, 3000);
-      setIsLoading(false);
-    })
-    .catch(function (errors) {
-      // Improved error handling
-      if (errors.response) {
-        setUnIsSuccess(errors.response.data.message);
-      } else if (errors.request) {
-        setUnIsSuccess("Network error, please try again later.");
-      } else {
-        setUnIsSuccess("An error occurred. Please try again.");
-      }
-      setTimeout(() => {
-        setUnIsSuccess(false);
-      }, 3000);
-      setIsLoading(false);
-    });
+      axios
+        .post(
+          `https://ecommerce.routemisr.com/api/v1/orders/${cartId}`,
+          values,
+          {
+            headers: { token: localStorage.getItem("token") },
+          }
+        )
+        .then(function () {
+          setIsSuccess(true);
+          toast.success("payment completed");
+          getUserCart();
+          setTimeout(() => {
+            setIsSuccess(false);
+            navigate("/products");
+          }, 2000);
+          setIsLoading(false);
+        })
+        .catch(function (errors) {
+          // Improved error handling
+          if (errors.response) {
+            setUnIsSuccess(errors.response.data.message);
+          } else if (errors.request) {
+            setUnIsSuccess("Network error, please try again later.");
+          } else {
+            setUnIsSuccess("An error occurred. Please try again.");
+          }
+          setTimeout(() => {
+            setUnIsSuccess(false);
+          }, 2000);
+          setIsLoading(false);
+        });
     },
   });
 
