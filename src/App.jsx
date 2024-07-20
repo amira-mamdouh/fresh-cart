@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createHashRouter } from "react-router-dom";
 import Layout from "./Components/Layout/Layout";
 import Register from "./Components/Register/Register";
 import Login from "./Components/Login/Login";
@@ -18,14 +18,14 @@ import CartContextProvider from "./Context/CartContext";
 import { Toaster } from "react-hot-toast";
 import Payment from "./Components/Payment/Payment";
 
-const routing = createBrowserRouter([
+const routing = createHashRouter([
   {
-    path: "/fresh-cart/",
+    path: "/",
     element: <Layout />,
     children: [
       { index: true, element: <Register /> },
       {
-        path: "/fresh-cart/products",
+        path: "products",
         element: (
           <ProtectedRoute>
             <Products />
@@ -33,22 +33,21 @@ const routing = createBrowserRouter([
         ),
       },
       {
-        path: "/fresh-cart/productDetails/:id",
+        path: "productDetails/:id",
         element: (
           <ProtectedRoute>
             <ProductDetails />
           </ProtectedRoute>
         ),
       },
-      { path: "/fresh-cart/register", element: <Register /> },
-      { path: "/fresh-cart/login", element: <Login /> },
-      { path: "/fresh-cart/forgotPassword", element: <ForgotPassword /> },
-      { path: "/fresh-cart/verifyResetCode", element: <VerifyResetCode /> },
-
-      { path: "/fresh-cart/updateData", element: <UpdateUserData /> },
-      { path: "/fresh-cart/payment", element: <Payment /> },
+      { path: "register", element: <Register /> },
+      { path: "login", element: <Login /> },
+      { path: "forgotPassword", element: <ForgotPassword /> },
+      { path: "verifyResetCode", element: <VerifyResetCode /> },
+      { path: "updateData", element: <UpdateUserData /> },
+      { path: "payment", element: <Payment /> },
       {
-        path: "/fresh-cart/cart",
+        path: "cart",
         element: (
           <ProtectedRoute>
             <Cart />
@@ -56,7 +55,7 @@ const routing = createBrowserRouter([
         ),
       },
       {
-        path: "/fresh-cart/categories",
+        path: "categories",
         element: (
           <ProtectedRoute>
             <Categories />
@@ -64,14 +63,14 @@ const routing = createBrowserRouter([
         ),
       },
       {
-        path: "/fresh-cart/brands",
+        path: "brands",
         element: (
           <ProtectedRoute>
             <Brands />
           </ProtectedRoute>
         ),
       },
-      { path: "/fresh-cart/*", element: <NotFound /> },
+      { path: "*", element: <NotFound /> },
     ],
   },
 ]);
