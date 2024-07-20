@@ -5,14 +5,10 @@ import { ColorRing } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { cartContext } from "../../Context/CartContext";
+import toast from "react-hot-toast";
 
 // Validation schema using Yup
 const mySchema = yup.object({
-  name: yup
-    .string()
-    .required()
-    .min(3, "Too Short, at least 3 characters")
-    .max(20, "Too Long!"),
   details: yup.string().required(),
   city: yup.string().required(),
   phone: yup.number().required("Phone number is required").positive().integer(),
@@ -39,38 +35,33 @@ export default function Payment() {
     validationSchema: mySchema,
     onSubmit: function (values) {
       setIsLoading(true);
-      axios
-        .post(
-          `https://ecommerce.routemisr.com/api/v1/orders/${cartId}`,
-          {
-            values,
-          },
-          {
-            headers: { token: localStorage.getItem("token") },
-          }
-        )
-        .then(function () {
-          setIsSuccess(true);
-          setTimeout(() => {
-            setIsSuccess(false);
-            navigate("/login");
-          }, 3000);
-          setIsLoading(false);
-        })
-        .catch(function (errors) {
-          // Improved error handling
-          if (errors.response) {
-            setUnIsSuccess(errors.response.data.message);
-          } else if (errors.request) {
-            setUnIsSuccess("Network error, please try again later.");
-          } else {
-            setUnIsSuccess("An error occurred. Please try again.");
-          }
-          setTimeout(() => {
-            setUnIsSuccess(false);
-          }, 3000);
-          setIsLoading(false);
-        });
+  axios
+    .post(`https://ecommerce.routemisr.com/api/v1/orders/${cartId}`, values, {
+      headers: { token: localStorage.getItem("token") },
+    })
+    .then(function () {
+      setIsSuccess(true);
+      toast.success("payment completed");
+      setTimeout(() => {
+        setIsSuccess(false);
+        navigate("/login");
+      }, 3000);
+      setIsLoading(false);
+    })
+    .catch(function (errors) {
+      // Improved error handling
+      if (errors.response) {
+        setUnIsSuccess(errors.response.data.message);
+      } else if (errors.request) {
+        setUnIsSuccess("Network error, please try again later.");
+      } else {
+        setUnIsSuccess("An error occurred. Please try again.");
+      }
+      setTimeout(() => {
+        setUnIsSuccess(false);
+      }, 3000);
+      setIsLoading(false);
+    });
     },
   });
 
@@ -86,9 +77,7 @@ export default function Payment() {
     <>
       <div className="container-sm w-md-75 m-md-auto p-5">
         {isSuccess ? (
-          <div className="alert alert-success text-center">
-            Congratulation your account has been created.
-          </div>
+          <div className="alert alert-success text-center">Congratulation.</div>
         ) : (
           ""
         )}
