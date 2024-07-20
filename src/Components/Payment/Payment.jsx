@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ColorRing } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { cartContext } from "../../Context/CartContext";
 
 // Validation schema using Yup
 const mySchema = yup.object({
@@ -23,6 +24,7 @@ export default function Payment() {
   const [isUnSuccess, setUnIsSuccess] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { cartId } = useContext(cartContext);
 
   // Initial form data
   const userData = {
@@ -38,7 +40,15 @@ export default function Payment() {
     onSubmit: function (values) {
       setIsLoading(true);
       axios
-        .post(`https://ecommerce.routemisr.com/api/v1/addresses`, values)
+        .post(
+          `https://ecommerce.routemisr.com/api/v1/orders/${cartId}`,
+          {
+            values,
+          },
+          {
+            headers: { token: localStorage.getItem("token") },
+          }
+        )
         .then(function () {
           setIsSuccess(true);
           setTimeout(() => {
