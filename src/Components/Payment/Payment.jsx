@@ -26,7 +26,6 @@ export default function Payment() {
 
   // Initial form data
   const userData = {
-    name: "",
     details: "",
     phone: "",
     city: "",
@@ -90,22 +89,6 @@ export default function Payment() {
         )}
         <h3 className="mb-3">Addresses:</h3>
         <form onSubmit={myFormik.handleSubmit} onKeyPress={handleKeyPress}>
-          <label htmlFor="name">Name:</label>
-          <input
-            value={myFormik.values.name}
-            onChange={myFormik.handleChange}
-            onBlur={myFormik.handleBlur}
-            type="text"
-            id="name"
-            name="name"
-            className="form-control mb-2"
-          />
-          {myFormik.errors.name ? (
-            <div className="error text-danger mb-3">{myFormik.errors.name}</div>
-          ) : (
-            ""
-          )}
-
           <label htmlFor="email">Details:</label>
           <input
             value={myFormik.values.details}
