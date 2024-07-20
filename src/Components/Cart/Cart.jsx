@@ -3,6 +3,7 @@ import { cartContext } from "../../Context/CartContext";
 import { FaTrashAlt } from "react-icons/fa";
 import Loading from "../Loading/Loading";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 export default function Cart() {
   const {
@@ -133,10 +134,10 @@ export default function Cart() {
               </div>
             </div>
           ))}
-          <div className="d-flex justify-content-between">
-            <link to={"/payment"} className="btn bg-main text-white">
+          <div className="d-flex justify-content-end mt-5">
+            <Link to="/payment" className="btn bg-main text-white">
               CheckOut
-            </link>
+            </Link>
           </div>
         </div>
       ) : (
