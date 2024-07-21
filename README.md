@@ -6,7 +6,6 @@ Fresh Cart is a modern e-commerce platform that provides a seamless and enjoyabl
 
 ## Key Features
 - Easy product browsing
-- Advanced search system
 - Dynamic shopping cart
 - Secure and easy checkout process
 - Personalized user accounts
